@@ -1,0 +1,17 @@
+{
+    "name": "logshub/ecommerce-synch",
+    "require": {
+        "logshub/search-client-php": "^1.3",
+        "symfony/console": "^4.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7"
+    },
+    "autoload": {
+        "psr-4": {
+            "Logshub\\EcommerceSearch\\": "src",
+            "Logshub\\EcommerceSearch\\Command\\": "bin/Command"
+        }
+    },
+    "bin": ["bin/ecommerce-synch"]
+}

@@ -1,0 +1,15 @@
+#!/usr/bin/env php
+<?php
+
+foreach ([__DIR__ . '/../../../autoload.php', __DIR__ . '/../../vendor/autoload.php', __DIR__ . '/../vendor/autoload.php'] as $file) {
+    if (file_exists($file)) {
+        require $file;
+        break;
+    }
+}
+$commandSynch = new \Logshub\EcommerceSearch\Command\SynchCommand();
+
+$app = new \Symfony\Component\Console\Application();
+$app->add($commandSynch);
+$app->setDefaultCommand($commandSynch->getName());
+$app->run();
