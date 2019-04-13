@@ -8,11 +8,6 @@ use Symfony\Component\Console\Input\InputOption;
 
 class SynchCommand extends Command
 {
-    /**
-     * @var \Logshub\EcommerceSearch\Config\File
-     */
-    protected $config;
-    
     protected function configure()
     {
         $this->setName("synch")
@@ -22,6 +17,17 @@ class SynchCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln('synch');
+        $config = new \Logshub\EcommerceSearch\Config\File($input->getOption('config'));
+        $synchronizer = new \Logshub\EcommerceSearch\Synchronizer($config);
+
+        $csvProductsPath = $synchronizer->dumpProductsCsv();
+        $output->writeln('Products CSV path: ' . $csvProductsPath);
+        $prodResult = $synchronizer->pushIntoIndex($csvProductsPath);
+        $output->writeln('Result: ' . print_r($prodResult, true));
+
+        $csvCategoriesPath = $synchronizer->dumpCategoriesCsv();
+        $output->writeln('Categories CSV path: ' . $csvCategoriesPath);
+        $catResult = $synchronizer->pushIntoIndex($csvProductsPath, true);
+        $output->writeln('Result: ' . print_r($catResult, true));
     }
 }

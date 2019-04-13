@@ -5,9 +5,12 @@
         "symfony/console": "^4.2"
     },
     "require-dev": {
-        "phpunit/phpunit": "^7"
+        "phpunit/phpunit": "^8.1"
     },
     "autoload": {
+        "files": [
+            "modules.php"
+        ],
         "psr-4": {
             "Logshub\\EcommerceSearch\\": "src",
             "Logshub\\EcommerceSearch\\Command\\": "bin/Command"

@@ -1,6 +1,17 @@
 # eCommerce Synch
 
+### Installation
 
+Your DB user must have `FILE` privilege in database:
+
+```
+GRANT FILE ON *.* TO oscommerce;
+FLUSH PRIVILEGES;
+```
+
+### How to create input module?
+
+...
 
 ### TODO
 
