@@ -1,6 +1,8 @@
 <?php
 namespace Logshub\EcommerceSearch\Config;
 
+use Logshub\EcommerceSearch\Exception;
+
 class File extends \Logshub\SearchClient\Config\File
 {
     /**
@@ -16,6 +18,11 @@ class File extends \Logshub\SearchClient\Config\File
      */
     protected $synch;
 
+    /**
+     * @var string
+     */
+    protected $apidomain;
+
     public function load()
     {
         $config = \parse_ini_file($this->filePath, true);
@@ -30,9 +37,12 @@ class File extends \Logshub\SearchClient\Config\File
         if (!empty($config['pub_key'])){
             $this->pubKey = $config['pub_key'];
         }
+        if (!empty($config['apidomain'])){
+            $this->apidomain = $config['apidomain'];
+        }
 
         if (empty($config['output']) || empty($config['input']) || empty($config['synch'])){
-            throw new \Logshub\EcommerceSearch\Exception('Configuration is not valid');
+            throw new Exception('Configuration is not valid');
         }
 
         $this->input = $config['input'];
@@ -62,9 +72,41 @@ class File extends \Logshub\SearchClient\Config\File
 
     public function getCsvDumpPath()
     {
-        return $this->getGenerateCsvByDatabase() ?
+        $path = $this->getGenerateCsvByDatabase() ?
             $this->getSectionOption('synch', 'dump_csv_by_db_directory', '') :
             $this->getSectionOption('synch', 'dump_csv_by_php_directory', '');
+
+        if (!preg_match('/^[a-zA-Z\/_-]+$/', $path)){
+            throw new Exception('CSV dump directory is not valid');
+        }
+
+        return substr($path, -1) !== '/' ? $path.'/' : $path;
+    }
+
+    public function getApiDomain()
+    {
+        return $this->apidomain ? $this->apidomain : 'apisearch.logshub.com';
+    }
+
+    public function getFilePath()
+    {
+        // TODO: check if path is relative
+        return $this->filePath;
+    }
+
+    public function getRootAbsolutePath()
+    {
+        $paths = [
+            dirname(__FILE__) . '/../../',
+            dirname(__FILE__) . '/../../../../',
+        ];
+        foreach ($paths as $path){
+            if (file_exists($path . 'vendor/')){
+                return $path;
+            }
+        }
+
+        throw new Exception('Unable to determine root path');
     }
 
     protected function getSectionOption($section, $key, $default = null)

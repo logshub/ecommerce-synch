@@ -12,6 +12,10 @@ abstract class ModuleAbstract
      * @var array
      */
     protected static $modules;
+    /**
+     * @var int
+     */
+    protected $filenameTimestamp;
 
     /**
      * Returns SQL that will return result with proper structure
@@ -35,22 +39,24 @@ abstract class ModuleAbstract
         $this->config = $config;
     }
 
-    public static function all(\Logshub\EcommerceSearch\Config\File $config)
+    public function getDumpFilePath($isProductsDump)
     {
-        if (!empty(self::$modules)){
-            return self::$modules;
+        if (!$this->filenameTimestamp){
+            $this->filenameTimestamp = time();
         }
-        self::$modules = [
-            new OsCommerce2($config),
-        ];
-
-        return self::$modules;
+        return $this->config->getCsvDumpPath() .(
+            $isProductsDump ?
+            'products_'.$this->filenameTimestamp.'.csv' :
+            'categories_'.$this->filenameTimestamp.'.csv');
     }
 
-    public static function get(\Logshub\EcommerceSearch\Config\File $config, $name = null)
+    public function getDumpToCsvSqlPostfix($path)
     {
-        return [
-            new OsCommerce2($config),
-        ];
+        return "
+        INTO OUTFILE '".$path."'
+        FIELDS TERMINATED BY ';'
+        ENCLOSED BY '\"'
+        LINES TERMINATED BY '\n';
+        ";
     }
 }

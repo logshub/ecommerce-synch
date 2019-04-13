@@ -22,7 +22,9 @@ class Synchronizer
 
     public function pushIntoIndex($csvPath, $isCategoriesPush = false)
     {
+        $output = $this->getOutputModule();
 
+        return $output->push($csvPath, $isCategoriesPush);
     }
 
     public function dumpCategoriesCsv()
@@ -30,13 +32,24 @@ class Synchronizer
         
     }
 
+    /**
+     * @return string Full path to CSV file
+     * @throws Exception
+     */
     public function dumpProductsCsv()
     {
         $input = $this->getInputModule();
         $sql = $input->getProductsSql();
+        $filePath = $input->getDumpFilePath(true);
 
         if ($this->config->getGenerateCsvByDatabase()){
+            $sql .= $input->getDumpToCsvSqlPostfix($filePath);
+            $this->getDbConnection()->exec($sql);
 
+            $err = $this->getDbConnection()->errorInfo();
+            if ($err[0] != '00000'){
+                throw new Exception('Unable to dump products CSV: ' . $err[0] . ' ' . $err[2]);
+            }
         } else {
             // TODO: implement
             throw new Exception('NOT IMPLEMENTED YET');
@@ -46,6 +59,8 @@ class Synchronizer
             //     echo $row['name'] . "\n";
             // }
         }
+
+        return $filePath;
     }
 
     /**
@@ -89,11 +104,7 @@ class Synchronizer
         $username = $this->config->getInput('db_user');
         $password = $this->config->getInput('db_pass');
 
-        $this->db = new \PDO($dsn, $username, $password, [
-            PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-            PDO::ATTR_EMULATE_PREPARES   => false,
-        ]);
+        $this->db = new \PDO($dsn, $username, $password);
 
         return $this->db;
     }
