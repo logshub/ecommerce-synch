@@ -27,6 +27,10 @@ class Synchronizer
         return $output->push($csvPath, $isCategoriesPush);
     }
 
+    /**
+     * @return string Full path to CSV file
+     * @throws Exception
+     */
     public function dumpCategoriesCsv()
     {
         $input = $this->getInputModule();
@@ -42,13 +46,9 @@ class Synchronizer
                 throw new Exception('Unable to dump products CSV: ' . $err[0] . ' ' . $err[2]);
             }
         } else {
-            // TODO: implement
-            throw new Exception('NOT IMPLEMENTED YET');
-            // $result = $this->getDbConnection()->execute($sql);
-            // $stmt = $pdo->query('SELECT name FROM users');
-            // while ($row = $stmt->fetch()){
-            //     echo $row['name'] . "\n";
-            // }
+            $stmt = $this->getDbConnection()->query($sql);
+            $csvWriter = new \Logshub\EcommerceSearch\Csv\Writer($filePath);
+            $csvWriter->write($stmt);
         }
 
         return $filePath;
@@ -73,13 +73,9 @@ class Synchronizer
                 throw new Exception('Unable to dump products CSV: ' . $err[0] . ' ' . $err[2]);
             }
         } else {
-            // TODO: implement
-            throw new Exception('NOT IMPLEMENTED YET');
-            // $result = $this->getDbConnection()->execute($sql);
-            // $stmt = $pdo->query('SELECT name FROM users');
-            // while ($row = $stmt->fetch()){
-            //     echo $row['name'] . "\n";
-            // }
+            $stmt = $this->getDbConnection()->query($sql);
+            $csvWriter = new \Logshub\EcommerceSearch\Csv\Writer($filePath);
+            $csvWriter->write($stmt);
         }
 
         return $filePath;
