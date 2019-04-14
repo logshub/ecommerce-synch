@@ -28,6 +28,7 @@ class Synchronizer
     }
 
     /**
+     * @todo refactor
      * @return string Full path to CSV file
      * @throws Exception
      */
@@ -47,6 +48,10 @@ class Synchronizer
             }
         } else {
             $stmt = $this->getDbConnection()->query($sql);
+            $err = $this->getDbConnection()->errorInfo();
+            if ($err[0] != '00000'){
+                throw new Exception('Unable to dump products CSV: ' . $err[0] . ' ' . $err[2]);
+            }
             $csvWriter = new \Logshub\EcommerceSynch\Csv\Writer($filePath);
             $csvWriter->write($stmt);
         }
@@ -55,6 +60,7 @@ class Synchronizer
     }
 
     /**
+     * @todo refactor
      * @return string Full path to CSV file
      * @throws Exception
      */
@@ -74,6 +80,10 @@ class Synchronizer
             }
         } else {
             $stmt = $this->getDbConnection()->query($sql);
+            $err = $this->getDbConnection()->errorInfo();
+            if ($err[0] != '00000'){
+                throw new Exception('Unable to dump products CSV: ' . $err[0] . ' ' . $err[2]);
+            }
             $csvWriter = new \Logshub\EcommerceSynch\Csv\Writer($filePath);
             $csvWriter->write($stmt);
         }

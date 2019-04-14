@@ -8,7 +8,7 @@ other system eg. LogsHub.com search service.
 
 ### Supported eCommerce platforms
 
-* osCommerce (2.4.2)
+* osCommerce (2.3.4.1 - 2.4.2)
 
 ### How does it work
 

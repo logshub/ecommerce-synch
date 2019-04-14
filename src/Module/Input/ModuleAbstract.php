@@ -39,6 +39,11 @@ abstract class ModuleAbstract
         $this->config = $config;
     }
 
+    public function getDbPrefix()
+    {
+        return $this->config->getInput('db_prefix');
+    }
+
     public function getDumpFilePath($isProductsDump)
     {
         if (!$this->filenameTimestamp){
