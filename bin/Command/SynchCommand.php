@@ -23,11 +23,11 @@ class SynchCommand extends Command
         $csvProductsPath = $synchronizer->dumpProductsCsv();
         $output->writeln('Products CSV path: ' . $csvProductsPath);
         $prodResult = $synchronizer->pushIntoIndex($csvProductsPath);
-        $output->writeln('Result: ' . print_r($prodResult, true));
+        $output->writeln('Result: ' . $prodResult);
 
-        // $csvCategoriesPath = $synchronizer->dumpCategoriesCsv();
-        // $output->writeln('Categories CSV path: ' . $csvCategoriesPath);
-        // $catResult = $synchronizer->pushIntoIndex($csvProductsPath, true);
-        // $output->writeln('Result: ' . print_r($catResult, true));
+        $csvCategoriesPath = $synchronizer->dumpCategoriesCsv();
+        $output->writeln('Categories CSV path: ' . $csvCategoriesPath);
+        $catResult = $synchronizer->pushIntoIndex($csvCategoriesPath, true);
+        $output->writeln('Result: ' . $catResult);
     }
 }

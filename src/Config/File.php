@@ -90,7 +90,6 @@ class File extends \Logshub\SearchClient\Config\File
 
     public function getFilePath()
     {
-        // TODO: check if path is relative
         return $this->filePath;
     }
 

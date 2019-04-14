@@ -29,7 +29,29 @@ class Synchronizer
 
     public function dumpCategoriesCsv()
     {
-        
+        $input = $this->getInputModule();
+        $sql = $input->getCategoriesSql();
+        $filePath = $input->getDumpFilePath(false);
+
+        if ($this->config->getGenerateCsvByDatabase()){
+            $sql .= $input->getDumpToCsvSqlPostfix($filePath);
+            $this->getDbConnection()->exec($sql);
+
+            $err = $this->getDbConnection()->errorInfo();
+            if ($err[0] != '00000'){
+                throw new Exception('Unable to dump products CSV: ' . $err[0] . ' ' . $err[2]);
+            }
+        } else {
+            // TODO: implement
+            throw new Exception('NOT IMPLEMENTED YET');
+            // $result = $this->getDbConnection()->execute($sql);
+            // $stmt = $pdo->query('SELECT name FROM users');
+            // while ($row = $stmt->fetch()){
+            //     echo $row['name'] . "\n";
+            // }
+        }
+
+        return $filePath;
     }
 
     /**
