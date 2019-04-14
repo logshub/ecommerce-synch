@@ -8,7 +8,10 @@ other system eg. LogsHub.com search service.
 
 ### Supported eCommerce platforms
 
+* OpenCart (2.1.0.2 - X)
 * osCommerce (2.3.4.1 - 2.4.2)
+
+Other versions might work as well, but was not tested.
 
 ### How does it work
 
@@ -49,6 +52,13 @@ FLUSH PRIVILEGES;
 ### How to create input module?
 
 ...
+
+### TODO
+
+* callback for database dump (not workig for now)
+* in case of deletion on platform, it will not be deleted by this mechanism
+* check visibility in SQLs
+* clear old CSV files
 
 ### Input modules to do
 

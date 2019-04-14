@@ -34,7 +34,7 @@ class Writer
     /**
      * @throws Exception
      */
-    public function write(\PDOStatement $stmt)
+    public function write(\PDOStatement $stmt, $callback)
     {
         $this->validate();
         if (($handle = \fopen($this->filePath, "wb")) === false) {
@@ -43,6 +43,9 @@ class Writer
         $result = $stmt->execute();
         $rows = $stmt->fetchAll(\PDO::FETCH_NUM);
         foreach ($rows as $row) {
+            if (\is_callable($callback)){
+                $row = call_user_func($callback, $row);
+            }
             \fputcsv($handle, $row, $this->csvSeparator);
         }
         \fclose($handle);

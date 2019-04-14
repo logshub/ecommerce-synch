@@ -11,6 +11,20 @@ CREATE DATABASE oscommerce2341;
 GRANT ALL ON oscommerce2341.* TO oscommerce IDENTIFIED BY 'password';
 CREATE DATABASE oscommerce242;
 GRANT ALL ON oscommerce242.* TO oscommerce IDENTIFIED BY 'password';
+
+CREATE DATABASE opencart2102;
+GRANT ALL ON opencart2102.* TO opencart IDENTIFIED BY 'password';
+CREATE DATABASE opencart2200;
+GRANT ALL ON opencart2200.* TO opencart IDENTIFIED BY 'password';
+CREATE DATABASE opencart2302;
+GRANT ALL ON opencart2302.* TO opencart IDENTIFIED BY 'password';
+CREATE DATABASE opencart3002;
+GRANT ALL ON opencart3002.* TO opencart IDENTIFIED BY 'password';
+CREATE DATABASE opencart3012;
+GRANT ALL ON opencart3012.* TO opencart IDENTIFIED BY 'password';
+CREATE DATABASE opencart3031;
+GRANT ALL ON opencart3031.* TO opencart IDENTIFIED BY 'password';
+
 FLUSH privileges;
 ```
 

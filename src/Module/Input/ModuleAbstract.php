@@ -64,4 +64,22 @@ abstract class ModuleAbstract
         LINES TERMINATED BY '\n';
         ";
     }
+
+    /**
+     * @return callable|null
+     */
+    public function getProductCsvRowCallback()
+    {
+        // eg. [$this, 'onCsvRow']
+        return null;
+    }
+
+    /**
+     * @return callable|null
+     */
+    public function getCategoryCsvRowCallback()
+    {
+        // eg. [$this, 'onCsvRow']
+        return null;
+    }
 }
