@@ -1,7 +1,7 @@
 <?php
-namespace Logshub\EcommerceSearch\Csv;
+namespace Logshub\EcommerceSynch\Csv;
 
-use Logshub\EcommerceSearch\Exception;
+use Logshub\EcommerceSynch\Exception;
 
 class Writer
 {

@@ -1,5 +1,5 @@
 <?php
-namespace Logshub\EcommerceSearch\Command;
+namespace Logshub\EcommerceSynch\Command;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -17,8 +17,8 @@ class SynchCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $config = new \Logshub\EcommerceSearch\Config\File($input->getOption('config'));
-        $synchronizer = new \Logshub\EcommerceSearch\Synchronizer($config);
+        $config = new \Logshub\EcommerceSynch\Config\File($input->getOption('config'));
+        $synchronizer = new \Logshub\EcommerceSynch\Synchronizer($config);
 
         $csvProductsPath = $synchronizer->dumpProductsCsv();
         $output->writeln('Products CSV path: ' . $csvProductsPath);

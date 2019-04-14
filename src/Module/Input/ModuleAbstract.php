@@ -1,10 +1,10 @@
 <?php
-namespace Logshub\EcommerceSearch\Module\Input;
+namespace Logshub\EcommerceSynch\Module\Input;
 
 abstract class ModuleAbstract
 {
     /**
-     * @var \Logshub\EcommerceSearch\Config\File
+     * @var \Logshub\EcommerceSynch\Config\File
      */
     protected $config;
 
@@ -34,7 +34,7 @@ abstract class ModuleAbstract
      */
     public abstract function getName();
 
-    public function setConfig(\Logshub\EcommerceSearch\Config\File $config)
+    public function setConfig(\Logshub\EcommerceSynch\Config\File $config)
     {
         $this->config = $config;
     }

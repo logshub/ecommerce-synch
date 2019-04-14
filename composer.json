@@ -13,8 +13,8 @@
             "modules.php"
         ],
         "psr-4": {
-            "Logshub\\EcommerceSearch\\": "src",
-            "Logshub\\EcommerceSearch\\Command\\": "bin/Command"
+            "Logshub\\EcommerceSynch\\": "src",
+            "Logshub\\EcommerceSynch\\Command\\": "bin/Command"
         }
     },
     "bin": ["bin/ecommerce-synch"]

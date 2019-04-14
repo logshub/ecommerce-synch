@@ -1,10 +1,10 @@
 <?php
-namespace Logshub\EcommerceSearch;
+namespace Logshub\EcommerceSynch;
 
 class Synchronizer
 {
     /**
-     * @var \Logshub\EcommerceSearch\Config\File
+     * @var \Logshub\EcommerceSynch\Config\File
      */
     protected $config;
     /**
@@ -15,7 +15,7 @@ class Synchronizer
     protected $inputModule;
     protected $outputModule;
 
-    public function __construct(\Logshub\EcommerceSearch\Config\File $config)
+    public function __construct(\Logshub\EcommerceSynch\Config\File $config)
     {
         $this->config = $config;
     }
@@ -47,7 +47,7 @@ class Synchronizer
             }
         } else {
             $stmt = $this->getDbConnection()->query($sql);
-            $csvWriter = new \Logshub\EcommerceSearch\Csv\Writer($filePath);
+            $csvWriter = new \Logshub\EcommerceSynch\Csv\Writer($filePath);
             $csvWriter->write($stmt);
         }
 
@@ -74,7 +74,7 @@ class Synchronizer
             }
         } else {
             $stmt = $this->getDbConnection()->query($sql);
-            $csvWriter = new \Logshub\EcommerceSearch\Csv\Writer($filePath);
+            $csvWriter = new \Logshub\EcommerceSynch\Csv\Writer($filePath);
             $csvWriter->write($stmt);
         }
 

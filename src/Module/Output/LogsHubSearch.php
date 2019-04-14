@@ -1,8 +1,8 @@
 <?php
-namespace Logshub\EcommerceSearch\Module\Output;
+namespace Logshub\EcommerceSynch\Module\Output;
 
 use Symfony\Component\Process\Process;
-use Logshub\EcommerceSearch\Exception;
+use Logshub\EcommerceSynch\Exception;
 
 class LogsHubSearch extends ModuleAbstract
 {

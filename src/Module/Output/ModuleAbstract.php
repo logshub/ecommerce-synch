@@ -1,10 +1,10 @@
 <?php
-namespace Logshub\EcommerceSearch\Module\Output;
+namespace Logshub\EcommerceSynch\Module\Output;
 
 abstract class ModuleAbstract
 {
     /**
-     * @var \Logshub\EcommerceSearch\Config\File
+     * @var \Logshub\EcommerceSynch\Config\File
      */
     protected $config;
     
@@ -15,7 +15,7 @@ abstract class ModuleAbstract
 
     public abstract function push($csvPath, $isCategoriesPush = false);
 
-    public function setConfig(\Logshub\EcommerceSearch\Config\File $config)
+    public function setConfig(\Logshub\EcommerceSynch\Config\File $config)
     {
         $this->config = $config;
     }

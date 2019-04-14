@@ -1,5 +1,5 @@
 <?php
-namespace Logshub\EcommerceSearch;
+namespace Logshub\EcommerceSynch;
 
 class Exception extends \Exception
 {

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-use Logshub\EcommerceSearch\Module;
+use Logshub\EcommerceSynch\Module;
 
 final class InputModuleTest extends \PHPUnit\Framework\TestCase
 {
@@ -25,6 +25,6 @@ final class InputModuleTest extends \PHPUnit\Framework\TestCase
 
     private function getConfig()
     {
-        return new \Logshub\EcommerceSearch\Config\File(dirname(__FILE__) . '/../config.example.ini');
+        return new \Logshub\EcommerceSynch\Config\File(dirname(__FILE__) . '/../config.example.ini');
     }
 }

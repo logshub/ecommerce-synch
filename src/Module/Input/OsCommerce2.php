@@ -1,5 +1,5 @@
 <?php
-namespace Logshub\EcommerceSearch\Module\Input;
+namespace Logshub\EcommerceSynch\Module\Input;
 
 class OsCommerce2 extends ModuleAbstract
 {

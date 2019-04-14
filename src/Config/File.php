@@ -1,7 +1,7 @@
 <?php
-namespace Logshub\EcommerceSearch\Config;
+namespace Logshub\EcommerceSynch\Config;
 
-use Logshub\EcommerceSearch\Exception;
+use Logshub\EcommerceSynch\Exception;
 
 class File extends \Logshub\SearchClient\Config\File
 {

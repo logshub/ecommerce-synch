@@ -12,7 +12,7 @@ foreach ($autoloads as $file) {
         break;
     }
 }
-$commandSynch = new \Logshub\EcommerceSearch\Command\SynchCommand();
+$commandSynch = new \Logshub\EcommerceSynch\Command\SynchCommand();
 
 $app = new \Symfony\Component\Console\Application();
 $app->add($commandSynch);

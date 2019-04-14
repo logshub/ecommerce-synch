@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-use Logshub\EcommerceSearch\Module;
+use Logshub\EcommerceSynch\Module;
 
 final class OutputModuleTest extends \PHPUnit\Framework\TestCase
 {
@@ -19,12 +19,12 @@ final class OutputModuleTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf(Module\Output\ModuleAbstract::class, $module);
         $this->assertInstanceOf(Module\Output\LogsHubSearch::class, $module);
 
-        $this->expectException(\Logshub\EcommerceSearch\Exception::class);
+        $this->expectException(\Logshub\EcommerceSynch\Exception::class);
         $module->push('non-existing-csv-file');
     }
 
     private function getConfig()
     {
-        return new \Logshub\EcommerceSearch\Config\File(dirname(__FILE__) . '/../config.example.ini');
+        return new \Logshub\EcommerceSynch\Config\File(dirname(__FILE__) . '/../config.example.ini');
     }
 }
