@@ -1,6 +1,6 @@
 # eCommerce Synch
 
-TODO: image with ecommerce platforms on the left, synch in center, and logshub on the right side.
+![Schema](img/ecommerce_synch.png)
 
 This is NOT a plugin to any of eCommerce platform. This is standalone application
 that process data from store's database (by modules for specific platform) into
@@ -15,7 +15,9 @@ Other versions might work as well, but was not tested.
 
 ### How does it work
 
-...
+Cron executes synchronization command. It takes configuration file, determine what is input module.
+It executes its SQL SELECT statements and saves result into CSV files (products and categories).
+Output module push CSV data into remote system eg. LogsHub.com search service.
 
 ### Requirements
 
@@ -59,6 +61,7 @@ FLUSH PRIVILEGES;
 * in case of deletion on platform, it will not be deleted by this mechanism
 * check visibility in SQLs
 * clear old CSV files
+* check last_updated fields in databases to make smaller synchronization.
 
 ### Input modules to do
 
@@ -66,7 +69,6 @@ FLUSH PRIVILEGES;
 * Magento
 * PrestaShop
 * OpenCart
-* osCommerce
 * Sylius
 * Ubercart - https://www.drupal.org/project/ubercart 
 * Spree - https://github.com/spree/spree
