@@ -25,6 +25,23 @@ GRANT ALL ON opencart3012.* TO opencart IDENTIFIED BY 'password';
 CREATE DATABASE opencart3031;
 GRANT ALL ON opencart3031.* TO opencart IDENTIFIED BY 'password';
 
+CREATE DATABASE prestashop1751;
+GRANT ALL ON prestashop1751.* TO prestashop IDENTIFIED BY 'password';
+CREATE DATABASE prestashop1744;
+GRANT ALL ON prestashop1744.* TO prestashop IDENTIFIED BY 'password';
+CREATE DATABASE prestashop1734;
+GRANT ALL ON prestashop1734.* TO prestashop IDENTIFIED BY 'password';
+CREATE DATABASE prestashop1725;
+GRANT ALL ON prestashop1725.* TO prestashop IDENTIFIED BY 'password';
+CREATE DATABASE prestashop1712;
+GRANT ALL ON prestashop1712.* TO prestashop IDENTIFIED BY 'password';
+CREATE DATABASE prestashop1706;
+GRANT ALL ON prestashop1706.* TO prestashop IDENTIFIED BY 'password';
+CREATE DATABASE prestashop16123;
+GRANT ALL ON prestashop16123.* TO prestashop IDENTIFIED BY 'password';
+CREATE DATABASE prestashop16110;
+GRANT ALL ON prestashop16110.* TO prestashop IDENTIFIED BY 'password';
+
 FLUSH privileges;
 ```
 

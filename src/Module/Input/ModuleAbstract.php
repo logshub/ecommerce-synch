@@ -1,6 +1,8 @@
 <?php
 namespace Logshub\EcommerceSynch\Module\Input;
 
+use Logshub\EcommerceSynch\Exception;
+
 abstract class ModuleAbstract
 {
     /**
@@ -41,7 +43,11 @@ abstract class ModuleAbstract
 
     public function getDbPrefix()
     {
-        return $this->config->getInput('db_prefix');
+        $prefix = $this->config->getInput('db_prefix');
+        if (!preg_match('/^[a-z_]*$/', $prefix)){
+            throw new Exception('Database prefix is not valid');
+        }
+        return $prefix;
     }
 
     public function getDumpFilePath($isProductsDump)
