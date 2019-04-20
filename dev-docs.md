@@ -45,6 +45,9 @@ GRANT ALL ON prestashop16110.* TO prestashop IDENTIFIED BY 'password';
 CREATE DATABASE sylius;
 GRANT ALL ON sylius.* TO sylius IDENTIFIED BY 'password';
 
+CREATE DATABASE woocommerce;
+GRANT ALL ON woocommerce.* TO woocommerce IDENTIFIED BY 'password';
+
 FLUSH privileges;
 ```
 

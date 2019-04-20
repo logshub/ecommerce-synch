@@ -6,6 +6,7 @@ use Logshub\EcommerceSynch\Module;
 Registrar::registerInput(new Module\Input\OsCommerce2());
 Registrar::registerInput(new Module\Input\OpenCart());
 Registrar::registerInput(new Module\Input\PrestaShop());
+Registrar::registerInput(new Module\Input\WooCommerce());
 Registrar::registerInput(new Module\Input\Sylius());
 
 Registrar::registerOutput(new Module\Output\LogsHubSearch());
