@@ -19,6 +19,8 @@ class PrestaShop extends ModuleAbstract
     /**
      * @todo price tax excluded?
      * @todo link from product_lang.link_rewrite
+     * @todo jpg always?
+     * @todo check product.date_upd
      */
     public function getProductsSql()
     {

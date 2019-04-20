@@ -42,6 +42,9 @@ GRANT ALL ON prestashop16123.* TO prestashop IDENTIFIED BY 'password';
 CREATE DATABASE prestashop16110;
 GRANT ALL ON prestashop16110.* TO prestashop IDENTIFIED BY 'password';
 
+CREATE DATABASE sylius;
+GRANT ALL ON sylius.* TO sylius IDENTIFIED BY 'password';
+
 FLUSH privileges;
 ```
 
