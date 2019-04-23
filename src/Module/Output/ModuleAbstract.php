@@ -4,7 +4,7 @@ namespace Logshub\EcommerceSynch\Module\Output;
 abstract class ModuleAbstract
 {
     /**
-     * @var \Logshub\EcommerceSynch\Config\File
+     * @var \Logshub\EcommerceSynch\File\Config
      */
     protected $config;
     
@@ -24,9 +24,9 @@ abstract class ModuleAbstract
     public abstract function remove($ids);
 
     /**
-     * @param \Logshub\EcommerceSynch\Config\File $config
+     * @param \Logshub\EcommerceSynch\File\Config $config
      */
-    public function setConfig(\Logshub\EcommerceSynch\Config\File $config)
+    public function setConfig(\Logshub\EcommerceSynch\File\Config $config)
     {
         $this->config = $config;
     }

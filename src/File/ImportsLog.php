@@ -64,7 +64,7 @@ class ImportsLog extends CsvWriter
 
         $all = $this->readAll();
         if (empty($all)){
-            return 0;
+            return [];
         }
         $this->lastRow = $all[count($all)-1];
 

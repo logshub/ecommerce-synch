@@ -4,7 +4,7 @@ namespace Logshub\EcommerceSynch;
 class Synchronizer
 {
     /**
-     * @var \Logshub\EcommerceSynch\Config\File
+     * @var \Logshub\EcommerceSynch\File\Config
      */
     protected $config;
     /**
@@ -24,7 +24,7 @@ class Synchronizer
      */
     protected $importLog;
 
-    public function __construct(\Logshub\EcommerceSynch\Config\File $config)
+    public function __construct(\Logshub\EcommerceSynch\File\Config $config)
     {
         $this->config = $config;
     }
@@ -105,20 +105,20 @@ class Synchronizer
     /**
      * @todo current ids is saved into log file before DELETE action - in case of failure
      * it will not be executed more
-     * @return int
+     * @return array of dropped IDs
      */
     public function dropRemoved()
     {
         $input = $this->getInputModule();
         if (!$input instanceof Module\Input\RemovableInterface){
-            return 0;
+            return [];
         }
          // from previously saved file
         $previousIds = $this->getPreviousIds();
         // from SQL query
         $currentIds = $this->getCurrentIds();
         if (empty($previousIds)){
-            return 0;
+            return [];
         }
         
         // elements that exists in the previous import and does not exists not

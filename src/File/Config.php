@@ -1,9 +1,9 @@
 <?php
-namespace Logshub\EcommerceSynch\Config;
+namespace Logshub\EcommerceSynch\File;
 
 use Logshub\EcommerceSynch\Exception;
 
-class File extends \Logshub\SearchClient\Config\File
+class Config extends \Logshub\SearchClient\Config\File
 {
     /**
      * @var array
@@ -76,11 +76,11 @@ class File extends \Logshub\SearchClient\Config\File
             $this->getSectionOption('synch', 'dump_csv_by_db_directory', '') :
             $this->getSectionOption('synch', 'dump_csv_by_php_directory', '');
 
-        if (!preg_match('/^[a-zA-Z\/_-]+$/', $path)){
+        if (!\preg_match('/^[a-zA-Z\/_-]+$/', $path)){
             throw new Exception('CSV dump directory is not valid');
         }
 
-        return substr($path, -1) !== '/' ? $path.'/' : $path;
+        return \substr($path, -1) !== '/' ? $path.'/' : $path;
     }
 
     public function getApiDomain()
@@ -96,11 +96,11 @@ class File extends \Logshub\SearchClient\Config\File
     public function getRootAbsolutePath()
     {
         $paths = [
-            dirname(__FILE__) . '/../../',
-            dirname(__FILE__) . '/../../../../',
+            \dirname(__FILE__) . '/../../',
+            \dirname(__FILE__) . '/../../../../',
         ];
         foreach ($paths as $path){
-            if (file_exists($path . 'vendor/')){
+            if (\file_exists($path . 'vendor/')){
                 return $path;
             }
         }

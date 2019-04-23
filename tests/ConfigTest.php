@@ -6,7 +6,7 @@ final class ConfigTest extends \PHPUnit\Framework\TestCase
     public function testConfig()
     {
         $path = dirname(__FILE__) . '/../config.example.ini';
-        $config = new \Logshub\EcommerceSynch\Config\File($path);
+        $config = new \Logshub\EcommerceSynch\File\Config($path);
         
         $this->assertEquals(false, $config->getGenerateCsvByDatabase());
         $this->assertEquals('/tmp/', $config->getCsvDumpPath());

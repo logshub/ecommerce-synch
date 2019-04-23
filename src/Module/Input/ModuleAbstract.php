@@ -6,7 +6,7 @@ use Logshub\EcommerceSynch\Exception;
 abstract class ModuleAbstract
 {
     /**
-     * @var \Logshub\EcommerceSynch\Config\File
+     * @var \Logshub\EcommerceSynch\File\Config
      */
     protected $config;
 
@@ -36,7 +36,7 @@ abstract class ModuleAbstract
      */
     public abstract function getName();
 
-    public function setConfig(\Logshub\EcommerceSynch\Config\File $config)
+    public function setConfig(\Logshub\EcommerceSynch\File\Config $config)
     {
         $this->config = $config;
     }

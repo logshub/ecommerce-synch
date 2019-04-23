@@ -25,6 +25,6 @@ final class InputModuleTest extends \PHPUnit\Framework\TestCase
 
     private function getConfig()
     {
-        return new \Logshub\EcommerceSynch\Config\File(dirname(__FILE__) . '/../config.example.ini');
+        return new \Logshub\EcommerceSynch\File\Config(dirname(__FILE__) . '/../config.example.ini');
     }
 }

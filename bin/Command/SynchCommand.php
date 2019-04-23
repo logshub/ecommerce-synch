@@ -17,7 +17,7 @@ class SynchCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $config = new \Logshub\EcommerceSynch\Config\File($input->getOption('config'));
+        $config = new \Logshub\EcommerceSynch\File\Config($input->getOption('config'));
         $synchronizer = new \Logshub\EcommerceSynch\Synchronizer($config);
 
         $csvProductsPath = $synchronizer->dumpProductsCsv();

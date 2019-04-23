@@ -28,7 +28,7 @@ class Registrar
         self::$outputModules[] = $module;
     }
 
-    public static function getOutput(\Logshub\EcommerceSynch\Config\File $config)
+    public static function getOutput(\Logshub\EcommerceSynch\File\Config $config)
     {
         $name = $config->getOutputModule();
         foreach (self::$outputModules as $module){
@@ -41,7 +41,7 @@ class Registrar
         throw new \Logshub\EcommerceSynch\Exception('Unable to get output module');
     }
 
-    public static function getInput(\Logshub\EcommerceSynch\Config\File $config)
+    public static function getInput(\Logshub\EcommerceSynch\File\Config $config)
     {
         $name = $config->getInputModule();
         foreach (self::$inputModules as $module){
