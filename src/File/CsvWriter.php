@@ -1,9 +1,9 @@
 <?php
-namespace Logshub\EcommerceSynch\Csv;
+namespace Logshub\EcommerceSynch\File;
 
 use Logshub\EcommerceSynch\Exception;
 
-class Writer
+class CsvWriter
 {
     protected $filePath;
     protected $csvSeparator;
@@ -32,6 +32,7 @@ class Writer
     }
 
     /**
+     * @return array of written IDs
      * @throws Exception
      */
     public function write(\PDOStatement $stmt, $callback)
@@ -40,12 +41,31 @@ class Writer
         if (($handle = \fopen($this->filePath, "wb")) === false) {
             throw new Exception('Unable to write CSV file');
         }
+        $ids = [];
         $result = $stmt->execute();
         $rows = $stmt->fetchAll(\PDO::FETCH_NUM);
         foreach ($rows as $row) {
             if (\is_callable($callback)){
-                $row = call_user_func($callback, $row);
+                $row = \call_user_func($callback, $row);
             }
+            \fputcsv($handle, $row, $this->csvSeparator);
+            $ids[] = $row[0];
+        }
+        \fclose($handle);
+
+        return $ids;
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function writeRows($rows)
+    {
+        $this->validate();
+        if (($handle = \fopen($this->filePath, "a")) === false) {
+            throw new Exception('Unable to write CSV file');
+        }
+        foreach ($rows as $row) {
             \fputcsv($handle, $row, $this->csvSeparator);
         }
         \fclose($handle);

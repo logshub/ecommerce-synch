@@ -8,7 +8,7 @@ other system eg. LogsHub.com search service.
 
 ### Supported eCommerce platforms
 
-* WooCommerce
+* WooCommerce (5.1.1)
 * PrestaShop (1.6.1.10 - 1.7.5.1)
 * OpenCart (2.1.0.2 - X)
 * osCommerce (2.3.4.1 - 2.4.2)
@@ -69,5 +69,6 @@ FLUSH PRIVILEGES;
 ### Input modules to do
 
 * Magento
+* ShopWare
 * Ubercart - https://www.drupal.org/project/ubercart 
 * Spree - https://github.com/spree/spree

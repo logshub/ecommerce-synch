@@ -1,7 +1,7 @@
 <?php
 namespace Logshub\EcommerceSynch\Module\Input;
 
-class PrestaShop extends ModuleAbstract
+class PrestaShop extends ModuleAbstract implements RemovableInterface
 {
     public function getName()
     {
@@ -90,7 +90,32 @@ class PrestaShop extends ModuleAbstract
         LEFT JOIN ".$prefix."category_lang AS cd1 ON c1.id_category = cd1.id_category AND cd1.id_shop = ".$shopId."
         LEFT JOIN ".$prefix."category AS c2 ON c2.id_category = c1.id_parent AND c2.is_root_category = 0 AND c2.active = 1
         LEFT JOIN ".$prefix."category_lang AS cd2 ON c2.id_category = cd2.id_category AND cd2.id_shop = ".$shopId."
-        WHERE cd.id_shop = ".$shopId." AND c.is_root_category = 0 AND c.active = 1;
+        WHERE cd.id_shop = ".$shopId." AND c.is_root_category = 0 AND c.active = 1
+        ";
+    }
+
+    /**
+     * For RemovableInterface
+     * @return string
+     */
+    public function getCurrentIdsSql()
+    {
+        $prefix = $this->getDbPrefix();
+        $shopId = $this->getShopId();
+        
+        return "
+        SELECT CONCAT('p', p.id_product)
+        FROM ".$prefix."product AS p
+        JOIN ".$prefix."product_lang AS pd ON p.id_product = pd.id_product AND pd.id_shop = ".$shopId."
+        JOIN ".$prefix."currency_shop AS cs ON pd.id_shop = cs.id_shop
+        JOIN ".$prefix."currency AS c ON cs.id_currency = c.id_currency
+        WHERE p.active = 1
+        
+        UNION
+        SELECT CONCAT('c', c.id_category)
+        FROM ".$prefix."category AS c
+        JOIN ".$prefix."category_lang AS cd ON c.id_category = cd.id_category
+        WHERE cd.id_shop = ".$shopId." AND c.is_root_category = 0 AND c.active = 1
         ";
     }
 }

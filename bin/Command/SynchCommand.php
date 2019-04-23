@@ -29,5 +29,12 @@ class SynchCommand extends Command
         $output->writeln('Categories CSV path: ' . $csvCategoriesPath);
         $catResult = $synchronizer->pushIntoIndex($csvCategoriesPath, true);
         $output->writeln('Result: ' . $catResult);
+
+        // categories + products
+        $droppedIds = $synchronizer->dropRemoved();
+        $output->writeln('Dropped total: ' . count($droppedIds));
+        foreach ($droppedIds as $droppedId){
+            $output->writeln('Dropped: #' . $droppedId);
+        }
     }
 }

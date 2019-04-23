@@ -33,4 +33,34 @@ class LogsHubSearch extends ModuleAbstract
 
         return $process->getOutput();
     }
+
+    /**
+     * @throws \Logshub\SearchClient\Exception (check ::getPrevious())
+     */
+    public function remove($ids)
+    {
+        $client = $this->getClient();
+        $serviceId = $this->config->getServiceId();
+        $counter = 0;
+
+        foreach ($ids as $id){
+            $request = new \Logshub\SearchClient\Request\Delete($serviceId, $id);
+            $response = $client->deleteDocument($request);
+            ++$counter;
+        }
+
+        return $counter;
+    }
+
+    protected function getClient()
+    {
+        $httpClient = new \GuzzleHttp\Client();
+
+        return new \Logshub\SearchClient\Client(
+            $httpClient,
+            'https://' . $this->config->getLocation() . '.' . $this->config->getApiDomain(),
+            $this->config->getApiHash(),
+            $this->config->getApiSecret()
+        );
+    }
 }

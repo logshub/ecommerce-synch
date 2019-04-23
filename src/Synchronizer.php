@@ -11,15 +11,27 @@ class Synchronizer
      * @var \PDO
      */
     protected $db;
-
+    /**
+     * @var Module\Input\ModuleAbstract
+     */
     protected $inputModule;
+    /**
+     * @var Module\Output\ModuleAbstract
+     */
     protected $outputModule;
+    /**
+     * @var \Logshub\EcommerceSynch\File\ImportsLog
+     */
+    protected $importLog;
 
     public function __construct(\Logshub\EcommerceSynch\Config\File $config)
     {
         $this->config = $config;
     }
 
+    /**
+     * @return string command raw output
+     */
     public function pushIntoIndex($csvPath, $isCategoriesPush = false)
     {
         $output = $this->getOutputModule();
@@ -28,7 +40,6 @@ class Synchronizer
     }
 
     /**
-     * @todo refactor
      * @return string Full path to CSV file
      * @throws Exception
      */
@@ -40,20 +51,11 @@ class Synchronizer
 
         if ($this->config->getGenerateCsvByDatabase()){
             $sql .= $input->getDumpToCsvSqlPostfix($filePath);
-            $this->getDbConnection()->exec($sql);
-
-            $err = $this->getDbConnection()->errorInfo();
-            if ($err[0] != '00000'){
-                throw new Exception('Unable to dump products CSV: ' . $err[0] . ' ' . $err[2]);
-            }
+            $this->execSQL($sql);
             // TODO: read CSV file, call callback for every row, and then save
         } else {
-            $stmt = $this->getDbConnection()->query($sql);
-            $err = $this->getDbConnection()->errorInfo();
-            if ($err[0] != '00000'){
-                throw new Exception('Unable to dump products CSV: ' . $err[0] . ' ' . $err[2]);
-            }
-            $csvWriter = new \Logshub\EcommerceSynch\Csv\Writer($filePath);
+            $stmt = $this->execSQL($sql);
+            $csvWriter = new \Logshub\EcommerceSynch\File\CsvWriter($filePath);
             $csvWriter->write($stmt, $input->getCategoryCsvRowCallback());
         }
 
@@ -61,7 +63,8 @@ class Synchronizer
     }
 
     /**
-     * @todo refactor
+     * @todo use "Eventable" interface that indicate whether module supports generating by database
+     * for not no events supported in this case
      * @return string Full path to CSV file
      * @throws Exception
      */
@@ -73,24 +76,65 @@ class Synchronizer
 
         if ($this->config->getGenerateCsvByDatabase()){
             $sql .= $input->getDumpToCsvSqlPostfix($filePath);
-            $this->getDbConnection()->exec($sql);
-
-            $err = $this->getDbConnection()->errorInfo();
-            if ($err[0] != '00000'){
-                throw new Exception('Unable to dump products CSV: ' . $err[0] . ' ' . $err[2]);
-            }
+            $this->execSQL($sql);
             // TODO: read CSV file, call callback for every row, and then save
         } else {
-            $stmt = $this->getDbConnection()->query($sql);
-            $err = $this->getDbConnection()->errorInfo();
-            if ($err[0] != '00000'){
-                throw new Exception('Unable to dump products CSV: ' . $err[0] . ' ' . $err[2]);
-            }
-            $csvWriter = new \Logshub\EcommerceSynch\Csv\Writer($filePath);
+            $stmt = $this->execSQL($sql);
+            $csvWriter = new \Logshub\EcommerceSynch\File\CsvWriter($filePath);
             $csvWriter->write($stmt, $input->getProductCsvRowCallback());
         }
 
         return $filePath;
+    }
+
+    /**
+     * @todo refactor as mothod should not save
+     * @return array of current IDs (products + categories) by SQL statement
+     */
+    public function getCurrentIds()
+    {
+        $input = $this->getInputModule();
+        $sql = $input->getCurrentIdsSql();
+
+        $stmt = $this->execSQL($sql);
+        $importLog = $this->getImportLog();
+
+        return $importLog->writeAllIds($stmt);
+    }
+
+    /**
+     * @todo current ids is saved into log file before DELETE action - in case of failure
+     * it will not be executed more
+     * @return int
+     */
+    public function dropRemoved()
+    {
+        $input = $this->getInputModule();
+        if (!$input instanceof Module\Input\RemovableInterface){
+            return 0;
+        }
+         // from previously saved file
+        $previousIds = $this->getPreviousIds();
+        // from SQL query
+        $currentIds = $this->getCurrentIds();
+        if (empty($previousIds)){
+            return 0;
+        }
+        
+        // elements that exists in the previous import and does not exists not
+        $idsToRemove = array_diff($previousIds, $currentIds);
+        $this->getOutputModule()->remove($idsToRemove);
+
+        return $idsToRemove;
+    }
+
+    protected function getPreviousIds()
+    {
+        $importLog = $this->getImportLog();
+        $lastRow = $importLog->getLastRow();
+        array_pop($lastRow); // last element is timestamp
+
+        return $lastRow;
     }
 
     /**
@@ -107,6 +151,9 @@ class Synchronizer
         return $this->inputModule;
     }
 
+    /**
+     * @var Module\Output\ModuleAbstract
+     */
     protected function getOutputModule()
     {
         if ($this->outputModule){
@@ -116,6 +163,20 @@ class Synchronizer
         $this->outputModule = Module\Registrar::getOutput($this->config);
 
         return $this->outputModule;
+    }
+
+    /**
+     * @return \PDOStatement
+     */
+    protected function execSQL($sql)
+    {
+        $stmt = $this->getDbConnection()->query($sql);
+        $err = $this->getDbConnection()->errorInfo();
+        if ($err[0] != '00000'){
+            throw new Exception('Unable to execute: ' . $err[0] . ' ' . $err[2]);
+        }
+
+        return $stmt;
     }
 
     /**
@@ -137,5 +198,17 @@ class Synchronizer
         $this->db = new \PDO($dsn, $username, $password);
 
         return $this->db;
+    }
+
+    protected function getImportLog()
+    {
+        if (!empty($this->importLog)){
+            return $this->importLog;
+        }
+        $logPath = $this->getInputModule()->getImportsLogFilePath();
+
+        $this->importLog = new \Logshub\EcommerceSynch\File\ImportsLog($logPath);
+
+        return $this->importLog;
     }
 }

@@ -61,6 +61,11 @@ abstract class ModuleAbstract
             'categories_'.$this->filenameTimestamp.'.csv');
     }
 
+    public function getImportsLogFilePath()
+    {
+        return $this->config->getCsvDumpPath() . 'importslog.csv';
+    }
+
     public function getDumpToCsvSqlPostfix($path)
     {
         return "

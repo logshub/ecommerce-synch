@@ -1,7 +1,7 @@
 <?php
 namespace Logshub\EcommerceSynch\Module\Input;
 
-class WooCommerce extends ModuleAbstract
+class WooCommerce extends ModuleAbstract implements RemovableInterface
 {
     public function getName()
     {
@@ -33,7 +33,7 @@ class WooCommerce extends ModuleAbstract
                 FROM ".$prefix."term_relationships AS tr
                 JOIN ".$prefix."term_taxonomy AS tt ON tr.term_taxonomy_id = tt.term_taxonomy_id AND taxonomy = 'product_cat'
                 JOIN ".$prefix."terms AS terms ON terms.term_id = tt.term_id
-                WHERE tr.object_id = p.id
+                WHERE tr.object_id = p.id AND terms.name != 'Uncategorized'
                 ORDER BY terms.term_id
             ),
             sku.meta_value
@@ -63,6 +63,27 @@ class WooCommerce extends ModuleAbstract
             terms.name,
             CONCAT('/product-category/', terms.slug, '/'),
             ''
+        FROM ".$prefix."term_taxonomy AS tt
+        JOIN ".$prefix."terms AS terms ON terms.term_id = tt.term_id
+        WHERE taxonomy = 'product_cat' AND terms.name != 'Uncategorized'
+        ";
+    }
+
+    /**
+     * For RemovableInterface
+     * @return string
+     */
+    public function getCurrentIdsSql()
+    {
+        $prefix = $this->getDbPrefix();
+        
+        return "
+        SELECT CONCAT('p', p.id)
+        FROM ".$prefix."posts AS p
+        WHERE p.post_type = 'product' AND p.post_status = 'publish'
+        
+        UNION
+        SELECT CONCAT('c', terms.term_id)
         FROM ".$prefix."term_taxonomy AS tt
         JOIN ".$prefix."terms AS terms ON terms.term_id = tt.term_id
         WHERE taxonomy = 'product_cat' AND terms.name != 'Uncategorized'
