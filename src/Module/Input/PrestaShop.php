@@ -20,14 +20,13 @@ class PrestaShop extends ModuleAbstract implements RemovableInterface
      * @todo price tax excluded?
      * @todo link from product_lang.link_rewrite
      * @todo jpg always?
-     * @todo check product.date_upd
      */
-    public function getProductsSql()
+    public function getProductsSql(\DateTime $time = null)
     {
         $prefix = $this->getDbPrefix();
         $shopId = $this->getShopId();
 
-        return "
+        $sql = "
         SELECT 'id', 'name', 'url', 'url_image', 'price', 'price_old', 'currency', 'description', 'categories', 'sku'
         UNION
         SELECT
@@ -65,18 +64,25 @@ class PrestaShop extends ModuleAbstract implements RemovableInterface
         LEFT JOIN ".$prefix."image AS im ON p.id_product = im.id_product AND cover = 1
         WHERE p.active = 1
         ";
+
+        if (!empty($time)){
+            $formatedDate = $time->format('Y-m-d H:i:s');
+            $sql .= " AND p.date_upd >= '".$formatedDate."' ";
+        }
+
+        return $sql;
     }
 
     /**
      * @todo parent-child relation
      * @todo image
      */
-    public function getCategoriesSql()
+    public function getCategoriesSql(\DateTime $time = null)
     {
         $prefix = $this->getDbPrefix();
         $shopId = $this->getShopId();
         
-        return "
+        $sql = "
         SELECT 'id', 'name', 'url', 'url_image'
         UNION
         SELECT
@@ -92,6 +98,13 @@ class PrestaShop extends ModuleAbstract implements RemovableInterface
         LEFT JOIN ".$prefix."category_lang AS cd2 ON c2.id_category = cd2.id_category AND cd2.id_shop = ".$shopId."
         WHERE cd.id_shop = ".$shopId." AND c.is_root_category = 0 AND c.active = 1
         ";
+
+        if (!empty($time)){
+            $formatedDate = $time->format('Y-m-d H:i:s');
+            $sql .= " AND c.date_upd >= '".$formatedDate."' ";
+        }
+
+        return $sql;
     }
 
     /**

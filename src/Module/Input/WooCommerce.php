@@ -12,11 +12,11 @@ class WooCommerce extends ModuleAbstract implements RemovableInterface
      * @todo price tax excluded?
      * @todo WHERE p.post_modified ...
      */
-    public function getProductsSql()
+    public function getProductsSql(\DateTime $time = null)
     {
         $prefix = $this->getDbPrefix();
 
-        return "
+        $sql = "
         SELECT 'id', 'name', 'url', 'url_image', 'price', 'price_old', 'currency', 'description', 'categories', 'sku'
         UNION
         SELECT
@@ -46,16 +46,20 @@ class WooCommerce extends ModuleAbstract implements RemovableInterface
         LEFT JOIN ".$prefix."postmeta AS sku ON p.id = sku.post_id AND sku.meta_key = '_sku'
         WHERE p.post_type = 'product' AND p.post_status = 'publish'
         ";
+
+        // @todo support date of update
+
+        return $sql;
     }
 
     /**
      * @todo image
      */
-    public function getCategoriesSql()
+    public function getCategoriesSql(\DateTime $time = null)
     {
         $prefix = $this->getDbPrefix();
         
-        return "
+        $sql = "
         SELECT 'id', 'name', 'url', 'url_image'
         UNION
         SELECT
@@ -67,6 +71,10 @@ class WooCommerce extends ModuleAbstract implements RemovableInterface
         JOIN ".$prefix."terms AS terms ON terms.term_id = tt.term_id
         WHERE taxonomy = 'product_cat' AND terms.name != 'Uncategorized'
         ";
+
+        // @todo support date of update
+
+        return $sql;
     }
 
     /**

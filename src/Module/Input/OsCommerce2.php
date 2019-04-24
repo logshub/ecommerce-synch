@@ -8,11 +8,11 @@ class OsCommerce2 extends ModuleAbstract
         return 'oscommerce2';
     }
 
-    public function getProductsSql()
+    public function getProductsSql(\DateTime $time = null)
     {
         $prefix = $this->getDbPrefix();
 
-        return "
+        $sql = "
         SELECT 'id', 'name', 'url', 'url_image', 'price', 'price_old', 'currency', 'description', 'categories', 'sku'
         UNION
         SELECT
@@ -29,13 +29,17 @@ class OsCommerce2 extends ModuleAbstract
         FROM ".$prefix."products AS p
         JOIN ".$prefix."products_description AS pd ON p.products_id = pd.products_id
         ";
+
+        // @todo support date of update
+
+        return $sql;
     }
 
-    public function getCategoriesSql()
+    public function getCategoriesSql(\DateTime $time = null)
     {
         $prefix = $this->getDbPrefix();
         
-        return "
+        $sql = "
         SELECT 'id', 'name', 'url', 'url_image'
         UNION
         SELECT
@@ -46,5 +50,7 @@ class OsCommerce2 extends ModuleAbstract
         FROM ".$prefix."categories AS c
         JOIN ".$prefix."categories_description AS cd ON c.categories_id = cd.categories_id
         ";
+
+        return $sql;
     }
 }

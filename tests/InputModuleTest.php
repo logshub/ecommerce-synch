@@ -9,7 +9,10 @@ final class InputModuleTest extends \PHPUnit\Framework\TestCase
     {
         $modules = Module\Registrar::getInputModules();
         foreach ($modules as $module){
+            $module->setConfig($this->getConfig());
             $this->assertInstanceOf(Module\Input\ModuleAbstract::class, $module);
+            $this->assertEquals(true, is_string($module->getProductsSql()));
+            $this->assertEquals(true, is_string($module->getCategoriesSql()));
         }
     }
 

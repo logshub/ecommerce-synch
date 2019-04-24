@@ -18,5 +18,6 @@ final class ConfigTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('..', $config->getInput('db_pass'));
         $this->assertEquals('...', $config->getInput('db_name'));
         $this->assertEquals('osc_', $config->getInput('db_prefix'));
+        $this->assertEquals(true, $config->getCheckUpdateDates());
     }
 }

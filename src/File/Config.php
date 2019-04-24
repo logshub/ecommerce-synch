@@ -70,6 +70,11 @@ class Config extends \Logshub\SearchClient\Config\File
         return $this->getSectionOption('input', $key, '');
     }
 
+    public function getCheckUpdateDates()
+    {
+        return (bool)$this->getInput('check_update_dates');
+    }
+
     public function getCsvDumpPath()
     {
         $path = $this->getGenerateCsvByDatabase() ?

@@ -45,8 +45,12 @@ class Synchronizer
      */
     public function dumpCategoriesCsv()
     {
+        $lastImportDate = null;
+        if ($this->config->getCheckUpdateDates()){
+            $lastImportDate = $this->getImportLog()->getLastImportDate();
+        }
         $input = $this->getInputModule();
-        $sql = $input->getCategoriesSql();
+        $sql = $input->getCategoriesSql($lastImportDate);
         $filePath = $input->getDumpFilePath(false);
 
         if ($this->config->getGenerateCsvByDatabase()){
@@ -70,8 +74,12 @@ class Synchronizer
      */
     public function dumpProductsCsv()
     {
+        $lastImportDate = null;
+        if ($this->config->getCheckUpdateDates()){
+            $lastImportDate = $this->getImportLog()->getLastImportDate();
+        }
         $input = $this->getInputModule();
-        $sql = $input->getProductsSql();
+        $sql = $input->getProductsSql($lastImportDate);
         $filePath = $input->getDumpFilePath(true);
 
         if ($this->config->getGenerateCsvByDatabase()){

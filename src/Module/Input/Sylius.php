@@ -21,12 +21,12 @@ class Sylius extends ModuleAbstract
      * @todo price tax excluded?
      * @todo WHERE pt.updated_at ...
      */
-    public function getProductsSql()
+    public function getProductsSql(\DateTime $time = null)
     {
         $prefix = $this->getDbPrefix();
         $locale = $this->getLocale();
 
-        return "
+        $sql = "
         SELECT 'id', 'name', 'url', 'url_image', 'price', 'price_old', 'currency', 'description', 'categories', 'sku'
         UNION
         SELECT
@@ -69,18 +69,22 @@ class Sylius extends ModuleAbstract
         WHERE p.enabled = 1
         GROUP BY p.id
         ";
+
+        // @todo support date of update
+
+        return $sql;
     }
 
     /**
      * @todo WHERE pt.updated_at ...
      * @todo image
      */
-    public function getCategoriesSql()
+    public function getCategoriesSql(\DateTime $time = null)
     {
         $prefix = $this->getDbPrefix();
         $locale = $this->getLocale();
         
-        return "
+        $sql = "
         SELECT 'id', 'name', 'url', 'url_image'
         UNION
         SELECT
@@ -96,5 +100,9 @@ class Sylius extends ModuleAbstract
         LEFT JOIN ".$prefix."taxon_translation AS ptd2 ON ptd2.translatable_id = pt2.id AND ptd2.locale = '".$locale."'
         WHERE pt.parent_id IS NOT NULL;
         ";
+
+        // @todo support date of update
+
+        return $sql;
     }
 }

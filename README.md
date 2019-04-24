@@ -54,14 +54,21 @@ GRANT FILE ON *.* TO myuser;
 FLUSH PRIVILEGES;
 ```
 
+### How to create cron job?
+
+...
+
 ### How to create input module?
 
 ...
 
+### Troubleshooting
+
+* last updated time is not calculated correctly: make sure timezone is the same on the PHP and database side
+
 ### TODO
 
-* in case of deletion on platform, it will not be deleted by this mechanism
-* check last_updated fields in databases to make smaller synchronization.
+* check last_updated fields in databases to make smaller synchronization (already done for prestashop).
 * clear old CSV files (new command)
 * check visibility in SQLs (opencart, oscommerce)
 * callback for database dump

@@ -8,11 +8,11 @@ class OpenCart extends ModuleAbstract
         return 'opencart';
     }
 
-    public function getProductsSql()
+    public function getProductsSql(\DateTime $time = null)
     {
         $prefix = $this->getDbPrefix();
 
-        return "
+        $sql = "
         SELECT 'id', 'name', 'url', 'url_image', 'price', 'price_old', 'currency', 'description', 'categories', 'sku', 'tmp_image_size'
         UNION
         SELECT
@@ -39,17 +39,19 @@ class OpenCart extends ModuleAbstract
         FROM ".$prefix."product AS p
         JOIN ".$prefix."product_description AS pd USING(product_id)
         ";
+
+        return $sql;
     }
 
     /**
      * @todo parent-child relation
      * @todo image
      */
-    public function getCategoriesSql()
+    public function getCategoriesSql(\DateTime $time = null)
     {
         $prefix = $this->getDbPrefix();
         
-        return "
+        $sql = "
         SELECT 'id', 'name', 'url', 'url_image'
         UNION
         SELECT
@@ -60,6 +62,10 @@ class OpenCart extends ModuleAbstract
         FROM ".$prefix."category AS c
         JOIN ".$prefix."category_description AS cd ON c.category_id = cd.category_id;
         ";
+
+        // @todo support date of update
+
+        return $sql;
     }
 
     public function getProductCsvRowCallback()

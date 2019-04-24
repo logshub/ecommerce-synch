@@ -23,13 +23,13 @@ abstract class ModuleAbstract
      * Returns SQL that will return result with proper structure
      * @return string
      */
-    public abstract function getProductsSql();
+    public abstract function getProductsSql(\DateTime $time = null);
 
     /**
      * Returns SQL that will return result with proper structure
      * @return string
      */
-    public abstract function getCategoriesSql();
+    public abstract function getCategoriesSql(\DateTime $time = null);
 
     /**
      * @return string
