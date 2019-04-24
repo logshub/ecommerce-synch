@@ -68,7 +68,7 @@ FLUSH PRIVILEGES;
 
 ### TODO
 
-* check last_updated fields in databases to make smaller synchronization (already done for prestashop).
+* check last_updated fields in databases to make smaller synchronization (opencart, oscommerce, sylius).
 * clear old CSV files (new command)
 * check visibility in SQLs (opencart, oscommerce)
 * callback for database dump

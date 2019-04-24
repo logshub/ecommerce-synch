@@ -10,7 +10,6 @@ class WooCommerce extends ModuleAbstract implements RemovableInterface
 
     /**
      * @todo price tax excluded?
-     * @todo WHERE p.post_modified ...
      */
     public function getProductsSql(\DateTime $time = null)
     {
@@ -47,7 +46,10 @@ class WooCommerce extends ModuleAbstract implements RemovableInterface
         WHERE p.post_type = 'product' AND p.post_status = 'publish'
         ";
 
-        // @todo support date of update
+        if (!empty($time)) {
+            $formatedDate = $time->format('Y-m-d H:i:s');
+            $sql .= " AND p.post_modified >= '".$formatedDate."' ";
+        }
 
         return $sql;
     }
@@ -72,7 +74,8 @@ class WooCommerce extends ModuleAbstract implements RemovableInterface
         WHERE taxonomy = 'product_cat' AND terms.name != 'Uncategorized'
         ";
 
-        // @todo support date of update
+        // unable to filter by date of modification,
+        // as there is no such field in database for categories
 
         return $sql;
     }

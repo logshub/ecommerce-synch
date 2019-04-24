@@ -102,7 +102,7 @@ class Config extends \Logshub\SearchClient\Config\File
     {
         $paths = [
             \dirname(__FILE__) . '/../../',
-            \dirname(__FILE__) . '/../../../../',
+            \dirname(__FILE__) . '/../../../../../',
         ];
         foreach ($paths as $path) {
             if (\file_exists($path . 'vendor/')) {
