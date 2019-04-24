@@ -11,17 +11,17 @@ abstract class ModuleAbstract
     /**
      * @return string name of output module (configuration value must match)
      */
-    public abstract function getName();
+    abstract public function getName();
     /**
      * Push documents into remote system
      * @return string output of command
      */
-    public abstract function push($csvPath, $isCategoriesPush = false);
+    abstract public function push($csvPath, $isCategoriesPush = false);
     /**
      * Removes documents by given ids
      * @return int number of removed documents
      */
-    public abstract function remove($ids);
+    abstract public function remove($ids);
 
     /**
      * @param \Logshub\EcommerceSynch\File\Config $config

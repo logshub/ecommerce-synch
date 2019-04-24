@@ -65,7 +65,7 @@ class PrestaShop extends ModuleAbstract implements RemovableInterface
         WHERE p.active = 1
         ";
 
-        if (!empty($time)){
+        if (!empty($time)) {
             $formatedDate = $time->format('Y-m-d H:i:s');
             $sql .= " AND p.date_upd >= '".$formatedDate."' ";
         }
@@ -99,7 +99,7 @@ class PrestaShop extends ModuleAbstract implements RemovableInterface
         WHERE cd.id_shop = ".$shopId." AND c.is_root_category = 0 AND c.active = 1
         ";
 
-        if (!empty($time)){
+        if (!empty($time)) {
             $formatedDate = $time->format('Y-m-d H:i:s');
             $sql .= " AND c.date_upd >= '".$formatedDate."' ";
         }

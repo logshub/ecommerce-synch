@@ -33,7 +33,7 @@ class SynchCommand extends Command
         // categories + products
         $droppedIds = $synchronizer->dropRemoved();
         $output->writeln('Dropped total: ' . count($droppedIds));
-        foreach ($droppedIds as $droppedId){
+        foreach ($droppedIds as $droppedId) {
             $output->writeln('Dropped: #' . $droppedId);
         }
     }

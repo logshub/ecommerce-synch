@@ -34,14 +34,14 @@ class Config extends \Logshub\SearchClient\Config\File
         $this->location = $config['location'];
         $this->apiHash = $config['apihash'];
         $this->apiSecret = $config['apisecret'];
-        if (!empty($config['pub_key'])){
+        if (!empty($config['pub_key'])) {
             $this->pubKey = $config['pub_key'];
         }
-        if (!empty($config['apidomain'])){
+        if (!empty($config['apidomain'])) {
             $this->apidomain = $config['apidomain'];
         }
 
-        if (empty($config['output']) || empty($config['input']) || empty($config['synch'])){
+        if (empty($config['output']) || empty($config['input']) || empty($config['synch'])) {
             throw new Exception('Configuration is not valid');
         }
 
@@ -81,7 +81,7 @@ class Config extends \Logshub\SearchClient\Config\File
             $this->getSectionOption('synch', 'dump_csv_by_db_directory', '') :
             $this->getSectionOption('synch', 'dump_csv_by_php_directory', '');
 
-        if (!\preg_match('/^[a-zA-Z\/_-]+$/', $path)){
+        if (!\preg_match('/^[a-zA-Z\/_-]+$/', $path)) {
             throw new Exception('CSV dump directory is not valid');
         }
 
@@ -104,8 +104,8 @@ class Config extends \Logshub\SearchClient\Config\File
             \dirname(__FILE__) . '/../../',
             \dirname(__FILE__) . '/../../../../',
         ];
-        foreach ($paths as $path){
-            if (\file_exists($path . 'vendor/')){
+        foreach ($paths as $path) {
+            if (\file_exists($path . 'vendor/')) {
                 return $path;
             }
         }

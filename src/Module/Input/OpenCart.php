@@ -83,12 +83,12 @@ class OpenCart extends ModuleAbstract
         $size = $row[10];
         unset($row[10]);
 
-        if (empty($row[3]) || empty($size)){
+        if (empty($row[3]) || empty($size)) {
             return $row;
         }
 
         $lastDot = \strrpos($row[3], '.');
-        if ($lastDot){
+        if ($lastDot) {
             $row[3] = \substr($row[3], 0, $lastDot) .
                 '-' . $size .
                 \substr($row[3], $lastDot);

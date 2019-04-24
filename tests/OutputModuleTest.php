@@ -8,7 +8,7 @@ final class OutputModuleTest extends \PHPUnit\Framework\TestCase
     public function testModules()
     {
         $modules = Module\Registrar::getOutputModules();
-        foreach ($modules as $module){
+        foreach ($modules as $module) {
             $this->assertInstanceOf(Module\Output\ModuleAbstract::class, $module);
         }
     }

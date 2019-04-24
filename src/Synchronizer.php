@@ -46,17 +46,17 @@ class Synchronizer
     public function dumpCategoriesCsv()
     {
         $lastImportDate = null;
-        if ($this->config->getCheckUpdateDates()){
+        if ($this->config->getCheckUpdateDates()) {
             $lastImportDate = $this->getImportLog()->getLastImportDate();
         }
         $input = $this->getInputModule();
         $sql = $input->getCategoriesSql($lastImportDate);
         $filePath = $input->getDumpFilePath(false);
 
-        if ($this->config->getGenerateCsvByDatabase()){
+        if ($this->config->getGenerateCsvByDatabase()) {
             $sql .= $input->getDumpToCsvSqlPostfix($filePath);
             $this->execSQL($sql);
-            // TODO: read CSV file, call callback for every row, and then save
+        // TODO: read CSV file, call callback for every row, and then save
         } else {
             $stmt = $this->execSQL($sql);
             $csvWriter = new \Logshub\EcommerceSynch\File\CsvWriter($filePath);
@@ -75,17 +75,17 @@ class Synchronizer
     public function dumpProductsCsv()
     {
         $lastImportDate = null;
-        if ($this->config->getCheckUpdateDates()){
+        if ($this->config->getCheckUpdateDates()) {
             $lastImportDate = $this->getImportLog()->getLastImportDate();
         }
         $input = $this->getInputModule();
         $sql = $input->getProductsSql($lastImportDate);
         $filePath = $input->getDumpFilePath(true);
 
-        if ($this->config->getGenerateCsvByDatabase()){
+        if ($this->config->getGenerateCsvByDatabase()) {
             $sql .= $input->getDumpToCsvSqlPostfix($filePath);
             $this->execSQL($sql);
-            // TODO: read CSV file, call callback for every row, and then save
+        // TODO: read CSV file, call callback for every row, and then save
         } else {
             $stmt = $this->execSQL($sql);
             $csvWriter = new \Logshub\EcommerceSynch\File\CsvWriter($filePath);
@@ -118,14 +118,14 @@ class Synchronizer
     public function dropRemoved()
     {
         $input = $this->getInputModule();
-        if (!$input instanceof Module\Input\RemovableInterface){
+        if (!$input instanceof Module\Input\RemovableInterface) {
             return [];
         }
-         // from previously saved file
+        // from previously saved file
         $previousIds = $this->getPreviousIds();
         // from SQL query
         $currentIds = $this->getCurrentIds();
-        if (empty($previousIds)){
+        if (empty($previousIds)) {
             return [];
         }
         
@@ -150,7 +150,7 @@ class Synchronizer
      */
     protected function getInputModule()
     {
-        if ($this->inputModule){
+        if ($this->inputModule) {
             return $this->inputModule;
         }
 
@@ -164,7 +164,7 @@ class Synchronizer
      */
     protected function getOutputModule()
     {
-        if ($this->outputModule){
+        if ($this->outputModule) {
             return $this->outputModule;
         }
 
@@ -180,7 +180,7 @@ class Synchronizer
     {
         $stmt = $this->getDbConnection()->query($sql);
         $err = $this->getDbConnection()->errorInfo();
-        if ($err[0] != '00000'){
+        if ($err[0] != '00000') {
             throw new Exception('Unable to execute: ' . $err[0] . ' ' . $err[2]);
         }
 
@@ -192,7 +192,7 @@ class Synchronizer
      */
     protected function getDbConnection()
     {
-        if ($this->db){
+        if ($this->db) {
             return $this->db;
         }
 
@@ -210,7 +210,7 @@ class Synchronizer
 
     protected function getImportLog()
     {
-        if (!empty($this->importLog)){
+        if (!empty($this->importLog)) {
             return $this->importLog;
         }
         $logPath = $this->getInputModule()->getImportsLogFilePath();

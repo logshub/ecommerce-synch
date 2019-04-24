@@ -15,7 +15,7 @@ class ImportsLog extends CsvWriter
         $rowToSave = [];
         $result = $stmt->execute();
         $rows = $stmt->fetchAll(\PDO::FETCH_NUM);
-        foreach ($rows as $row){
+        foreach ($rows as $row) {
             $rowToSave[] = $row[0];
         }
         // Format: 2019-04-24T09:02:44+02:00
@@ -32,11 +32,11 @@ class ImportsLog extends CsvWriter
     public function getLastImportDate()
     {
         $lastRow = $this->getLastRow();
-        if (empty($lastRow[count($lastRow)-1])){
+        if (empty($lastRow[count($lastRow)-1])) {
             return null;
         }
         $datetime = $lastRow[count($lastRow)-1];
-        if (!$datetime){
+        if (!$datetime) {
             return null;
         }
         $dt = \DateTime::createFromFormat(\DateTime::ATOM, $datetime);
@@ -50,7 +50,7 @@ class ImportsLog extends CsvWriter
      */
     public function readAll()
     {
-        if (!\file_exists($this->filePath)){
+        if (!\file_exists($this->filePath)) {
             return [];
         }
         if (($handle = \fopen($this->filePath, "r")) === false) {
@@ -67,12 +67,12 @@ class ImportsLog extends CsvWriter
 
     public function getLastRow()
     {
-        if (!empty($this->lastRow)){
+        if (!empty($this->lastRow)) {
             return $this->lastRow;
         }
 
         $all = $this->readAll();
-        if (empty($all)){
+        if (empty($all)) {
             return [];
         }
         $this->lastRow = $all[count($all)-1];

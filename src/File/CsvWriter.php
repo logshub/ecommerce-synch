@@ -45,7 +45,7 @@ class CsvWriter
         $result = $stmt->execute();
         $rows = $stmt->fetchAll(\PDO::FETCH_NUM);
         foreach ($rows as $row) {
-            if (\is_callable($callback)){
+            if (\is_callable($callback)) {
                 $row = \call_user_func($callback, $row);
             }
             \fputcsv($handle, $row, $this->csvSeparator);

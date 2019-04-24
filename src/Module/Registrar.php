@@ -14,7 +14,7 @@ class Registrar
 
     public static function registerInput(Input\ModuleAbstract $module)
     {
-        if (!$module instanceof Input\ModuleAbstract){
+        if (!$module instanceof Input\ModuleAbstract) {
             throw new \Logshub\EcommerceSynch\Exception('module registration error - wrong instance');
         }
         self::$inputModules[] = $module;
@@ -22,7 +22,7 @@ class Registrar
 
     public static function registerOutput(Output\ModuleAbstract $module)
     {
-        if (!$module instanceof Output\ModuleAbstract){
+        if (!$module instanceof Output\ModuleAbstract) {
             throw new \Logshub\EcommerceSynch\Exception('module registration error - wrong instance');
         }
         self::$outputModules[] = $module;
@@ -31,8 +31,8 @@ class Registrar
     public static function getOutput(\Logshub\EcommerceSynch\File\Config $config)
     {
         $name = $config->getOutputModule();
-        foreach (self::$outputModules as $module){
-            if ($module->getName() === $name){
+        foreach (self::$outputModules as $module) {
+            if ($module->getName() === $name) {
                 $module->setConfig($config);
                 return $module;
             }
@@ -44,8 +44,8 @@ class Registrar
     public static function getInput(\Logshub\EcommerceSynch\File\Config $config)
     {
         $name = $config->getInputModule();
-        foreach (self::$inputModules as $module){
-            if ($module->getName() === $name){
+        foreach (self::$inputModules as $module) {
+            if ($module->getName() === $name) {
                 $module->setConfig($config);
                 return $module;
             }

@@ -23,18 +23,18 @@ abstract class ModuleAbstract
      * Returns SQL that will return result with proper structure
      * @return string
      */
-    public abstract function getProductsSql(\DateTime $time = null);
+    abstract public function getProductsSql(\DateTime $time = null);
 
     /**
      * Returns SQL that will return result with proper structure
      * @return string
      */
-    public abstract function getCategoriesSql(\DateTime $time = null);
+    abstract public function getCategoriesSql(\DateTime $time = null);
 
     /**
      * @return string
      */
-    public abstract function getName();
+    abstract public function getName();
 
     public function setConfig(\Logshub\EcommerceSynch\File\Config $config)
     {
@@ -44,7 +44,7 @@ abstract class ModuleAbstract
     public function getDbPrefix()
     {
         $prefix = $this->config->getInput('db_prefix');
-        if (!preg_match('/^[a-z_]*$/', $prefix)){
+        if (!preg_match('/^[a-z_]*$/', $prefix)) {
             throw new Exception('Database prefix is not valid');
         }
         return $prefix;
@@ -52,13 +52,14 @@ abstract class ModuleAbstract
 
     public function getDumpFilePath($isProductsDump)
     {
-        if (!$this->filenameTimestamp){
+        if (!$this->filenameTimestamp) {
             $this->filenameTimestamp = time();
         }
         return $this->config->getCsvDumpPath() .(
             $isProductsDump ?
             'products_'.$this->filenameTimestamp.'.csv' :
-            'categories_'.$this->filenameTimestamp.'.csv');
+            'categories_'.$this->filenameTimestamp.'.csv'
+        );
     }
 
     public function getImportsLogFilePath()

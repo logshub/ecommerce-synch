@@ -43,7 +43,7 @@ class LogsHubSearch extends ModuleAbstract
         $serviceId = $this->config->getServiceId();
         $counter = 0;
 
-        foreach ($ids as $id){
+        foreach ($ids as $id) {
             $request = new \Logshub\SearchClient\Request\Delete($serviceId, $id);
             $response = $client->deleteDocument($request);
             ++$counter;
