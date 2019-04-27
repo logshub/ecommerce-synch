@@ -11,7 +11,7 @@ final class ConfigTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(false, $config->getGenerateCsvByDatabase());
         $this->assertEquals('/tmp/', $config->getCsvDumpPath());
         $this->assertEquals('logshub-search', $config->getOutputModule());
-        $this->assertEquals('oscommerce2', $config->getInputModule());
+        $this->assertEquals('prestashop', $config->getInputModule());
         $this->assertEquals('mysql', $config->getInput('db_driver'));
         $this->assertEquals('127.0.0.1', $config->getInput('db_host'));
         $this->assertEquals('.', $config->getInput('db_user'));

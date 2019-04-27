@@ -118,9 +118,6 @@ class Synchronizer
     public function dropRemoved()
     {
         $input = $this->getInputModule();
-        if (!$input instanceof Module\Input\RemovableInterface) {
-            return [];
-        }
         // from previously saved file
         $previousIds = $this->getPreviousIds();
         // from SQL query
@@ -176,7 +173,7 @@ class Synchronizer
     /**
      * @return \PDOStatement
      */
-    protected function execSQL($sql)
+    public function execSQL($sql)
     {
         $stmt = $this->getDbConnection()->query($sql);
         $err = $this->getDbConnection()->errorInfo();

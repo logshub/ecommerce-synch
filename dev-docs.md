@@ -5,6 +5,9 @@ TODO: automate provisioning
 ### Preparing databases
 
 ```
+CREATE DATABASE testdatabase;
+GRANT ALL ON testdatabase.* TO oscommerce IDENTIFIED BY 'password';
+
 CREATE DATABASE oscommerce23;
 GRANT ALL ON oscommerce23.* TO oscommerce IDENTIFIED BY 'password';
 CREATE DATABASE oscommerce2341;
@@ -44,11 +47,40 @@ GRANT ALL ON prestashop16110.* TO prestashop IDENTIFIED BY 'password';
 
 CREATE DATABASE sylius;
 GRANT ALL ON sylius.* TO sylius IDENTIFIED BY 'password';
+# php bin/console server:start 0.0.0.0:8081
 
 CREATE DATABASE woocommerce;
 GRANT ALL ON woocommerce.* TO woocommerce IDENTIFIED BY 'password';
 
 FLUSH privileges;
+```
+
+Backup
+
+```
+mysqldump --host=192.168.1.141 -u oscommerce -ppassword opencart2102 oc_product oc_product_description oc_category oc_category_description oc_setting oc_product_to_category > testdatabase.sql
+mysqldump --host=192.168.1.141 -u oscommerce -ppassword oscommerce242 osc_products osc_products_description osc_categories osc_categories_description osc_configuration osc_products_to_categories >> testdatabase.sql
+mysqldump --host=192.168.1.141 -u oscommerce -ppassword prestashop1751 newprefix_product newprefix_product_lang newprefix_currency_shop newprefix_currency newprefix_image newprefix_category newprefix_category_lang newprefix_category_product >> testdatabase.sql
+mysqldump --host=192.168.1.141 -u oscommerce -ppassword sylius sylius_product sylius_product_translation sylius_product_image sylius_taxon sylius_taxon_translation sylius_product_variant sylius_channel_pricing sylius_channel sylius_currency >> testdatabase.sql
+mysqldump --host=192.168.1.141 -u oscommerce -ppassword woocommerce wp_posts wp_postmeta wp_options wp_term_relationships wp_term_taxonomy wp_terms >> testdatabase.sql
+
+mysql --host=192.168.1.141 -u oscommerce -ppassword testdatabase < testdatabase.sql
+```
+
+Clearing database from not needed content
+
+```
+DELETE FROM wp_options WHERE LENGTH(option_value) > 1000;
+update osc_configuration set configuration_description = '';
+update newprefix_product_lang set description = '', description_short = '';
+update oc_category_description set description = '';
+update oc_product_description set description = '';
+update osc_products_description set products_description = '';
+update sylius_product_translation set description = '';
+update sylius_taxon_translation set description = '';
+update wp_posts set post_content = '';
+update wp_options set configuration_description = '';
+update osc_configuration set configuration_description = '';
 ```
 
 ### osCommerce

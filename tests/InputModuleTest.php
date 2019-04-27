@@ -20,7 +20,7 @@ final class InputModuleTest extends \PHPUnit\Framework\TestCase
     {
         $module = Module\Registrar::getInput($this->getConfig());
         $this->assertInstanceOf(Module\Input\ModuleAbstract::class, $module);
-        $this->assertInstanceOf(Module\Input\OsCommerce2::class, $module);
+        $this->assertInstanceOf(Module\Input\PrestaShop::class, $module);
 
         $this->assertEquals(true, is_string($module->getProductsSql()));
         $this->assertEquals(true, is_string($module->getCategoriesSql()));

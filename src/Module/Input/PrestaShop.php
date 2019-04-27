@@ -1,7 +1,7 @@
 <?php
 namespace Logshub\EcommerceSynch\Module\Input;
 
-class PrestaShop extends ModuleAbstract implements RemovableInterface
+class PrestaShop extends ModuleAbstract
 {
     public function getName()
     {
@@ -108,7 +108,6 @@ class PrestaShop extends ModuleAbstract implements RemovableInterface
     }
 
     /**
-     * For RemovableInterface
      * @return string
      */
     public function getCurrentIdsSql()

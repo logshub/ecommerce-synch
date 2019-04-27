@@ -50,6 +50,11 @@ class Config extends \Logshub\SearchClient\Config\File
         $this->synch = $config['synch'];
     }
 
+    public function setInput(array $input)
+    {
+        $this->input = $input;
+    }
+    
     public function getInputModule()
     {
         return $this->getSectionOption('input', 'module', '');

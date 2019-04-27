@@ -1,7 +1,7 @@
 <?php
 namespace Logshub\EcommerceSynch\Module\Input;
 
-class WooCommerce extends ModuleAbstract implements RemovableInterface
+class WooCommerce extends ModuleAbstract
 {
     public function getName()
     {
@@ -81,7 +81,6 @@ class WooCommerce extends ModuleAbstract implements RemovableInterface
     }
 
     /**
-     * For RemovableInterface
      * @return string
      */
     public function getCurrentIdsSql()

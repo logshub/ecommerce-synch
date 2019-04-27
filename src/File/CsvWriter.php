@@ -42,7 +42,7 @@ class CsvWriter
             throw new Exception('Unable to write CSV file');
         }
         $ids = [];
-        $result = $stmt->execute();
+        $stmt->execute();
         $rows = $stmt->fetchAll(\PDO::FETCH_NUM);
         foreach ($rows as $row) {
             if (\is_callable($callback)) {

@@ -28,9 +28,14 @@ class OsCommerce2 extends ModuleAbstract
             p.products_model
         FROM ".$prefix."products AS p
         JOIN ".$prefix."products_description AS pd ON p.products_id = pd.products_id
+        WHERE p.products_status = 1
         ";
 
-        // @todo support date of update
+        if (!empty($time)) {
+            // p.products_last_modified can be NULL, but it will be imported on the first time (not time provided here)
+            $formatedDate = $time->format('Y-m-d H:i:s');
+            $sql .= " AND p.products_last_modified >= '".$formatedDate."' ";
+        }
 
         return $sql;
     }
@@ -51,6 +56,32 @@ class OsCommerce2 extends ModuleAbstract
         JOIN ".$prefix."categories_description AS cd ON c.categories_id = cd.categories_id
         ";
 
+        if (!empty($time)) {
+            // c.last_modified can be NULL, but it will be imported on the first time (not time provided here)
+            $formatedDate = $time->format('Y-m-d H:i:s');
+            $sql .= " WHERE c.last_modified >= '".$formatedDate."' ";
+        }
+
         return $sql;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCurrentIdsSql()
+    {
+        $prefix = $this->getDbPrefix();
+        
+        return "
+        SELECT CONCAT('p', p.products_id)
+        FROM ".$prefix."products AS p
+        JOIN ".$prefix."products_description AS pd ON p.products_id = pd.products_id
+        WHERE p.products_status = 1
+        
+        UNION
+        SELECT CONCAT('c', c.categories_id)
+        FROM ".$prefix."categories AS c
+        JOIN ".$prefix."categories_description AS cd ON c.categories_id = cd.categories_id
+        ";
     }
 }

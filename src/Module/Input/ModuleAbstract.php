@@ -32,6 +32,12 @@ abstract class ModuleAbstract
     abstract public function getCategoriesSql(\DateTime $time = null);
 
     /**
+     * Returns SQL with all the tracked IDs of documents
+     * @return string
+     */
+    abstract public function getCurrentIdsSql();
+
+    /**
      * @return string
      */
     abstract public function getName();

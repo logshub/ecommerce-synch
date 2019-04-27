@@ -72,10 +72,6 @@ GRANT FILE ON *.* TO myuser;
 FLUSH PRIVILEGES;
 ```
 
-### How to create cron job?
-
-...
-
 ### How to create input module?
 
 ...
@@ -86,9 +82,7 @@ FLUSH PRIVILEGES;
 
 ### TODO
 
-* check last_updated fields in databases to make smaller synchronization (opencart, oscommerce, sylius).
 * clear old CSV files (new command)
-* check visibility in SQLs (opencart, oscommerce)
 * callback for database dump
 
 ### Input modules to do

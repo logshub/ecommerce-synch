@@ -38,7 +38,13 @@ class OpenCart extends ModuleAbstract
             )
         FROM ".$prefix."product AS p
         JOIN ".$prefix."product_description AS pd USING(product_id)
+        WHERE status = 1
         ";
+
+        if (!empty($time)) {
+            $formatedDate = $time->format('Y-m-d H:i:s');
+            $sql .= " AND p.date_modified >= '".$formatedDate."' ";
+        }
 
         return $sql;
     }
@@ -60,12 +66,35 @@ class OpenCart extends ModuleAbstract
             CONCAT('/index.php?route=product/category&path=', c.category_id),
             ''
         FROM ".$prefix."category AS c
-        JOIN ".$prefix."category_description AS cd ON c.category_id = cd.category_id;
+        JOIN ".$prefix."category_description AS cd ON c.category_id = cd.category_id
         ";
 
-        // @todo support date of update
+        if (!empty($time)) {
+            $formatedDate = $time->format('Y-m-d H:i:s');
+            $sql .= " WHERE c.date_modified >= '".$formatedDate."' ";
+        }
 
         return $sql;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCurrentIdsSql()
+    {
+        $prefix = $this->getDbPrefix();
+        
+        return "
+        SELECT CONCAT('p', p.product_id)
+        FROM ".$prefix."product AS p
+        JOIN ".$prefix."product_description AS pd USING(product_id)
+        WHERE status = 1
+        
+        UNION
+        SELECT CONCAT('c', c.category_id)
+        FROM ".$prefix."category AS c
+        JOIN ".$prefix."category_description AS cd ON c.category_id = cd.category_id
+        ";
     }
 
     public function getProductCsvRowCallback()

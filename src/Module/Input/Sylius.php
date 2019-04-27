@@ -67,16 +67,19 @@ class Sylius extends ModuleAbstract
         JOIN ".$prefix."product_translation AS pd ON p.id = pd.translatable_id AND pd.locale = '".$locale."'
         LEFT JOIN ".$prefix."product_image AS pimg ON pimg.owner_id = p.id AND pimg.type = 'thumbnail'
         WHERE p.enabled = 1
-        GROUP BY p.id
         ";
 
-        // @todo support date of update
+        if (!empty($time)) {
+            $formatedDate = $time->format('Y-m-d H:i:s');
+            $sql .= " AND p.updated_at >= '".$formatedDate."' ";
+        }
+
+        $sql .= ' GROUP BY p.id';
 
         return $sql;
     }
 
     /**
-     * @todo WHERE pt.updated_at ...
      * @todo image
      */
     public function getCategoriesSql(\DateTime $time = null)
@@ -98,11 +101,36 @@ class Sylius extends ModuleAbstract
         LEFT JOIN ".$prefix."taxon_translation AS ptd1 ON ptd1.translatable_id = pt1.id AND ptd1.locale = '".$locale."'
         LEFT JOIN ".$prefix."taxon AS pt2 ON pt1.parent_id = pt2.id AND pt2.parent_id IS NOT NULL
         LEFT JOIN ".$prefix."taxon_translation AS ptd2 ON ptd2.translatable_id = pt2.id AND ptd2.locale = '".$locale."'
-        WHERE pt.parent_id IS NOT NULL;
+        WHERE pt.parent_id IS NOT NULL
         ";
 
-        // @todo support date of update
+        if (!empty($time)) {
+            $formatedDate = $time->format('Y-m-d H:i:s');
+            $sql .= " AND pt.updated_at >= '".$formatedDate."' ";
+        }
 
         return $sql;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCurrentIdsSql()
+    {
+        $prefix = $this->getDbPrefix();
+        $locale = $this->getLocale();
+        
+        return "
+        SELECT CONCAT('p', p.id)
+        FROM ".$prefix."product AS p
+        JOIN ".$prefix."product_translation AS pd ON p.id = pd.translatable_id AND pd.locale = '".$locale."'
+        WHERE p.enabled = 1
+        
+        UNION
+        SELECT CONCAT('c', pt.id)
+        FROM ".$prefix."taxon AS pt
+        JOIN ".$prefix."taxon_translation AS ptd ON ptd.translatable_id = pt.id AND ptd.locale = '".$locale."'
+        WHERE pt.parent_id IS NOT NULL
+        ";
     }
 }
