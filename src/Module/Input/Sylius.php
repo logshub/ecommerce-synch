@@ -19,7 +19,6 @@ class Sylius extends ModuleAbstract
 
     /**
      * @todo price tax excluded?
-     * @todo WHERE pt.updated_at ...
      */
     public function getProductsSql(\DateTime $time = null)
     {

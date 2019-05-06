@@ -1217,3 +1217,414 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2019-04-27 14:03:30
+
+
+-- MySQL dump 10.13  Distrib 5.7.26, for Linux (x86_64)
+--
+-- Host: 192.168.1.141    Database: magento19_tmp
+-- ------------------------------------------------------
+-- Server version	5.5.62-0+deb8u1
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `catalog_category_entity`
+--
+
+DROP TABLE IF EXISTS `catalog_category_entity`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `catalog_category_entity` (
+  `entity_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Entity ID',
+  `entity_type_id` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Entity Type ID',
+  `attribute_set_id` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Attriute Set ID',
+  `parent_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Parent Category ID',
+  `created_at` timestamp NULL DEFAULT NULL COMMENT 'Creation Time',
+  `updated_at` timestamp NULL DEFAULT NULL COMMENT 'Update Time',
+  `path` varchar(255) NOT NULL COMMENT 'Tree Path',
+  `position` int(11) NOT NULL COMMENT 'Position',
+  `level` int(11) NOT NULL DEFAULT '0' COMMENT 'Tree Level',
+  `children_count` int(11) NOT NULL COMMENT 'Child Count',
+  PRIMARY KEY (`entity_id`),
+  KEY `IDX_CATALOG_CATEGORY_ENTITY_LEVEL` (`level`),
+  KEY `IDX_CATALOG_CATEGORY_ENTITY_PATH_ENTITY_ID` (`path`,`entity_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8 COMMENT='Catalog Category Table';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `catalog_category_entity`
+--
+
+LOCK TABLES `catalog_category_entity` WRITE;
+/*!40000 ALTER TABLE `catalog_category_entity` DISABLE KEYS */;
+INSERT INTO `catalog_category_entity` VALUES (1,3,0,0,'2013-01-14 10:12:53','2013-01-14 10:12:53','1',0,0,28),(2,3,3,1,'2013-01-14 10:12:53','2013-05-15 22:43:57','1/2',1,1,27),(4,3,3,2,'2013-01-25 10:43:31','2013-05-15 22:50:23','1/2/4',2,2,4),(5,3,3,2,'2013-01-25 10:44:47','2013-05-08 05:20:07','1/2/5',3,2,5),(6,3,3,2,'2013-01-25 10:47:41','2013-12-25 12:28:34','1/2/6',4,2,4),(7,3,3,2,'2013-01-25 10:49:05','2013-05-08 05:26:34','1/2/7',5,2,4),(8,3,3,2,'2013-01-25 10:49:50','2013-05-15 22:49:33','1/2/8',6,2,4),(9,3,3,2,'2013-01-25 10:50:47','2013-05-10 17:17:59','1/2/9',7,2,0),(10,3,3,4,'2013-01-25 10:56:08','2014-03-07 15:01:55','1/2/4/10',1,3,0),(11,3,3,4,'2013-01-25 10:57:32','2014-11-22 23:50:26','1/2/4/11',2,3,0),(12,3,3,4,'2013-01-25 10:58:32','2013-05-06 04:11:20','1/2/4/12',3,3,0),(13,3,3,4,'2013-01-25 10:59:21','2013-03-05 04:45:24','1/2/4/13',4,3,0),(14,3,3,5,'2013-01-25 11:01:03','2013-05-06 04:12:42','1/2/5/14',1,3,0),(15,3,3,5,'2013-01-25 11:01:28','2014-11-23 00:08:20','1/2/5/15',2,3,0),(16,3,3,5,'2013-01-25 11:03:19','2013-04-16 08:52:47','1/2/5/16',3,3,0),(17,3,3,5,'2013-01-25 11:03:48','2013-03-05 07:15:31','1/2/5/17',4,3,0),(18,3,3,6,'2013-01-25 11:04:27','2013-03-05 07:16:27','1/2/6/18',1,3,0),(19,3,3,6,'2013-01-25 11:05:03','2013-03-05 07:16:42','1/2/6/19',2,3,0),(20,3,3,6,'2013-01-25 11:06:05','2013-05-08 05:21:45','1/2/6/20',3,3,0),(21,3,3,6,'2013-01-25 11:07:12','2013-03-05 07:17:10','1/2/6/21',4,3,0),(22,3,3,7,'2013-01-25 11:07:52','2013-05-16 20:06:14','1/2/7/22',1,3,0),(23,3,3,7,'2013-01-25 11:08:31','2013-03-05 07:17:38','1/2/7/23',2,3,0),(24,3,3,7,'2013-01-25 11:08:54','2013-03-08 19:27:16','1/2/7/24',3,3,0),(25,3,3,7,'2013-01-25 11:10:06','2013-03-29 22:54:12','1/2/7/25',4,3,0),(26,3,3,8,'2013-01-25 11:10:39','2013-05-06 04:17:00','1/2/8/26',1,3,0),(27,3,3,8,'2013-01-25 11:11:07','2013-05-06 04:17:12','1/2/8/27',2,3,0),(28,3,3,8,'2013-01-25 11:11:31','2013-05-06 04:17:24','1/2/8/28',3,3,0),(29,3,3,8,'2013-01-25 11:12:07','2013-05-06 04:17:34','1/2/8/29',4,3,0),(40,3,3,5,'2013-11-04 03:18:58','2014-11-21 02:27:50','1/2/5/40',5,3,0);
+/*!40000 ALTER TABLE `catalog_category_entity` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `catalog_category_entity_int`
+--
+
+DROP TABLE IF EXISTS `catalog_category_entity_int`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `catalog_category_entity_int` (
+  `value_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Value ID',
+  `entity_type_id` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Entity Type ID',
+  `attribute_id` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Attribute ID',
+  `store_id` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Store ID',
+  `entity_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Entity ID',
+  `value` int(11) DEFAULT NULL COMMENT 'Value',
+  PRIMARY KEY (`value_id`),
+  UNIQUE KEY `UNQ_CAT_CTGR_ENTT_INT_ENTT_TYPE_ID_ENTT_ID_ATTR_ID_STORE_ID` (`entity_type_id`,`entity_id`,`attribute_id`,`store_id`),
+  KEY `IDX_CATALOG_CATEGORY_ENTITY_INT_ENTITY_ID` (`entity_id`),
+  KEY `IDX_CATALOG_CATEGORY_ENTITY_INT_ATTRIBUTE_ID` (`attribute_id`),
+  KEY `IDX_CATALOG_CATEGORY_ENTITY_INT_STORE_ID` (`store_id`),
+  CONSTRAINT `FK_CATALOG_CATEGORY_ENTITY_INT_STORE_ID_CORE_STORE_STORE_ID` FOREIGN KEY (`store_id`) REFERENCES `core_store` (`store_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_CAT_CTGR_ENTT_INT_ATTR_ID_EAV_ATTR_ATTR_ID` FOREIGN KEY (`attribute_id`) REFERENCES `eav_attribute` (`attribute_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_CAT_CTGR_ENTT_INT_ENTT_ID_CAT_CTGR_ENTT_ENTT_ID` FOREIGN KEY (`entity_id`) REFERENCES `catalog_category_entity` (`entity_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=330 DEFAULT CHARSET=utf8 COMMENT='Catalog Category Integer Attribute Backend Table';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `catalog_category_entity_int`
+--
+
+LOCK TABLES `catalog_category_entity_int` WRITE;
+/*!40000 ALTER TABLE `catalog_category_entity_int` DISABLE KEYS */;
+INSERT INTO `catalog_category_entity_int` VALUES (3,3,42,0,2,1),(5,3,42,1,2,1),(13,3,42,0,4,1),(19,3,42,0,5,1),(25,3,42,0,6,1),(31,3,42,0,7,1),(37,3,42,0,8,1),(43,3,42,0,9,1),(49,3,42,0,10,1),(55,3,42,0,11,1),(61,3,42,0,12,1),(67,3,42,0,13,1),(73,3,42,0,14,1),(79,3,42,0,15,1),(85,3,42,0,16,1),(91,3,42,0,17,1),(97,3,42,0,18,1),(103,3,42,0,19,1),(109,3,42,0,20,1),(115,3,42,0,21,1),(121,3,42,0,22,1),(127,3,42,0,23,1),(133,3,42,0,24,1),(139,3,42,0,25,1),(145,3,42,0,26,1),(151,3,42,0,27,1),(157,3,42,0,28,1),(163,3,42,0,29,1),(324,3,42,0,40,1);
+/*!40000 ALTER TABLE `catalog_category_entity_int` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `catalog_category_entity_varchar`
+--
+
+DROP TABLE IF EXISTS `catalog_category_entity_varchar`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `catalog_category_entity_varchar` (
+  `value_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Value ID',
+  `entity_type_id` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Entity Type ID',
+  `attribute_id` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Attribute ID',
+  `store_id` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Store ID',
+  `entity_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Entity ID',
+  `value` varchar(255) DEFAULT NULL COMMENT 'Value',
+  PRIMARY KEY (`value_id`),
+  UNIQUE KEY `UNQ_CAT_CTGR_ENTT_VCHR_ENTT_TYPE_ID_ENTT_ID_ATTR_ID_STORE_ID` (`entity_type_id`,`entity_id`,`attribute_id`,`store_id`),
+  KEY `IDX_CATALOG_CATEGORY_ENTITY_VARCHAR_ENTITY_ID` (`entity_id`),
+  KEY `IDX_CATALOG_CATEGORY_ENTITY_VARCHAR_ATTRIBUTE_ID` (`attribute_id`),
+  KEY `IDX_CATALOG_CATEGORY_ENTITY_VARCHAR_STORE_ID` (`store_id`),
+  CONSTRAINT `FK_CATALOG_CATEGORY_ENTITY_VARCHAR_STORE_ID_CORE_STORE_STORE_ID` FOREIGN KEY (`store_id`) REFERENCES `core_store` (`store_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_CAT_CTGR_ENTT_VCHR_ATTR_ID_EAV_ATTR_ATTR_ID` FOREIGN KEY (`attribute_id`) REFERENCES `eav_attribute` (`attribute_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_CAT_CTGR_ENTT_VCHR_ENTT_ID_CAT_CTGR_ENTT_ENTT_ID` FOREIGN KEY (`entity_id`) REFERENCES `catalog_category_entity` (`entity_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=1046 DEFAULT CHARSET=utf8 COMMENT='Catalog Category Varchar Attribute Backend Table';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `catalog_category_entity_varchar`
+--
+
+LOCK TABLES `catalog_category_entity_varchar` WRITE;
+/*!40000 ALTER TABLE `catalog_category_entity_varchar` DISABLE KEYS */;
+INSERT INTO `catalog_category_entity_varchar` VALUES (1,3,41,0,1,'Root Catalog'),(2,3,41,1,1,'Root Catalog'),(4,3,41,0,2,'Default Category'),(5,3,41,1,2,'Default Category'),(16,3,41,0,4,'Women'),(24,3,41,0,5,'Men'),(32,3,41,0,6,'Accessories'),(40,3,41,0,7,'Home & Decor'),(48,3,41,0,8,'Sale'),(56,3,41,0,9,'VIP'),(64,3,41,0,10,'New Arrivals'),(72,3,41,0,11,'Tops & Blouses'),(80,3,41,0,12,'Pants & Denim'),(88,3,41,0,13,'Dresses & Skirts'),(96,3,41,0,14,'New Arrivals'),(104,3,41,0,15,'Shirts'),(112,3,41,0,16,'Tees, Knits and Polos'),(120,3,41,0,17,'Pants & Denim'),(128,3,41,0,18,'Eyewear'),(136,3,41,0,19,'Jewelry'),(144,3,41,0,20,'Shoes'),(152,3,41,0,21,'Bags & Luggage'),(160,3,41,0,22,'Books & Music'),(168,3,41,0,23,'Bed & Bath'),(176,3,41,0,24,'Electronics'),(184,3,41,0,25,'Decorative Accents'),(192,3,41,0,26,'Women'),(200,3,41,0,27,'Men'),(208,3,41,0,28,'Accessories'),(216,3,41,0,29,'Home & Decor'),(449,3,133,0,11,NULL),(452,3,133,0,12,NULL),(455,3,133,0,13,NULL),(737,3,41,0,40,'Blazers');
+/*!40000 ALTER TABLE `catalog_category_entity_varchar` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `catalog_category_product`
+--
+
+DROP TABLE IF EXISTS `catalog_category_product`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `catalog_category_product` (
+  `category_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Category ID',
+  `product_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Product ID',
+  `position` int(11) NOT NULL DEFAULT '0' COMMENT 'Position',
+  PRIMARY KEY (`category_id`,`product_id`),
+  KEY `IDX_CATALOG_CATEGORY_PRODUCT_PRODUCT_ID` (`product_id`),
+  CONSTRAINT `FK_CAT_CTGR_PRD_CTGR_ID_CAT_CTGR_ENTT_ENTT_ID` FOREIGN KEY (`category_id`) REFERENCES `catalog_category_entity` (`entity_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_CAT_CTGR_PRD_PRD_ID_CAT_PRD_ENTT_ENTT_ID` FOREIGN KEY (`product_id`) REFERENCES `catalog_product_entity` (`entity_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Catalog Product To Category Linkage Table';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `catalog_category_product`
+--
+
+LOCK TABLES `catalog_category_product` WRITE;
+/*!40000 ALTER TABLE `catalog_category_product` DISABLE KEYS */;
+INSERT INTO `catalog_category_product` VALUES (4,284,1),(8,284,1),(10,285,1),(10,286,1),(10,287,1),(10,294,1),(10,295,1),(10,296,1),(11,282,200),(11,283,190),(11,284,180),(11,285,170),(11,286,160),(11,287,150),(11,288,140),(11,289,130),(11,290,120),(11,291,110),(11,292,100),(11,293,90),(11,294,80),(11,295,70),(11,296,60),(13,297,1),(13,298,1),(13,299,1),(13,300,1),(14,240,1),(14,241,1),(14,242,1),(14,258,1),(14,259,1),(14,260,1),(15,231,120),(15,232,110),(15,233,100),(15,234,90),(15,235,80),(15,236,70),(15,237,60),(15,238,50),(15,239,40),(16,249,1),(16,250,1),(16,251,1),(16,252,1),(16,253,1),(16,254,1),(16,255,1),(16,256,1),(16,257,1),(16,258,1),(16,259,1),(16,260,1),(16,261,1),(16,262,1),(16,263,1),(17,267,1),(17,268,1),(17,269,1),(17,270,1),(17,271,1),(17,272,1),(17,273,1),(17,274,1),(17,275,1),(17,276,1),(17,277,1),(17,278,1),(17,279,1),(17,280,1),(17,281,1),(27,237,1),(27,238,1),(27,239,1),(40,240,0),(40,241,0),(40,242,0),(40,243,0),(40,244,0),(40,245,0),(40,246,0),(40,247,0),(40,248,0);
+/*!40000 ALTER TABLE `catalog_category_product` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `catalog_product_entity`
+--
+
+DROP TABLE IF EXISTS `catalog_product_entity`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `catalog_product_entity` (
+  `entity_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Entity ID',
+  `entity_type_id` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Entity Type ID',
+  `attribute_set_id` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Attribute Set ID',
+  `type_id` varchar(32) NOT NULL DEFAULT 'simple' COMMENT 'Type ID',
+  `sku` varchar(64) DEFAULT NULL COMMENT 'SKU',
+  `has_options` smallint(6) NOT NULL DEFAULT '0' COMMENT 'Has Options',
+  `required_options` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Required Options',
+  `created_at` timestamp NULL DEFAULT NULL COMMENT 'Creation Time',
+  `updated_at` timestamp NULL DEFAULT NULL COMMENT 'Update Time',
+  PRIMARY KEY (`entity_id`),
+  KEY `IDX_CATALOG_PRODUCT_ENTITY_ENTITY_TYPE_ID` (`entity_type_id`),
+  KEY `IDX_CATALOG_PRODUCT_ENTITY_ATTRIBUTE_SET_ID` (`attribute_set_id`),
+  KEY `IDX_CATALOG_PRODUCT_ENTITY_SKU` (`sku`),
+  CONSTRAINT `FK_CAT_PRD_ENTT_ATTR_SET_ID_EAV_ATTR_SET_ATTR_SET_ID` FOREIGN KEY (`attribute_set_id`) REFERENCES `eav_attribute_set` (`attribute_set_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_CAT_PRD_ENTT_ENTT_TYPE_ID_EAV_ENTT_TYPE_ENTT_TYPE_ID` FOREIGN KEY (`entity_type_id`) REFERENCES `eav_entity_type` (`entity_type_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=906 DEFAULT CHARSET=utf8 COMMENT='Catalog Product Table';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `catalog_product_entity`
+--
+
+LOCK TABLES `catalog_product_entity` WRITE;
+/*!40000 ALTER TABLE `catalog_product_entity` DISABLE KEYS */;
+INSERT INTO `catalog_product_entity` VALUES (231,4,13,'simple','msj000',0,0,'2013-03-05 05:48:12','2013-03-05 08:27:15'),(232,4,13,'simple','msj001',0,0,'2013-03-05 05:48:13','2013-03-05 08:27:15'),(233,4,13,'simple','msj002',0,0,'2013-03-05 05:48:13','2013-03-05 08:27:15'),(234,4,13,'simple','msj003',0,0,'2013-03-05 05:48:13','2013-03-05 08:27:15'),(235,4,13,'simple','msj004',0,0,'2013-03-05 05:48:13','2013-03-05 08:27:15'),(236,4,13,'simple','msj005',0,0,'2013-03-05 05:48:13','2013-03-05 08:27:15'),(237,4,13,'simple','msj006',0,0,'2013-03-05 05:48:13','2014-03-08 06:36:36'),(238,4,13,'simple','msj007',0,0,'2013-03-05 05:48:13','2014-03-08 06:38:22'),(239,4,13,'simple','msj008',0,0,'2013-03-05 05:48:13','2014-03-08 06:39:03'),(240,4,13,'simple','msj009',0,0,'2013-03-05 05:48:13','2014-03-08 06:42:59'),(241,4,13,'simple','msj010',0,0,'2013-03-05 05:48:13','2014-03-08 06:43:22'),(242,4,13,'simple','msj011',0,0,'2013-03-05 05:48:13','2014-03-08 06:43:53'),(243,4,13,'simple','msj012',0,0,'2013-03-05 05:48:13','2013-03-05 08:27:15'),(244,4,13,'simple','msj013',0,0,'2013-03-05 05:48:13','2013-03-05 08:27:15'),(245,4,13,'simple','msj014',0,0,'2013-03-05 05:48:13','2013-03-05 08:27:15'),(246,4,13,'simple','msj015',0,0,'2013-03-05 05:48:13','2014-03-08 06:47:56'),(247,4,13,'simple','msj016',0,0,'2013-03-05 05:48:13','2014-03-08 06:48:20'),(248,4,13,'simple','msj017',0,0,'2013-03-05 05:48:13','2014-03-08 06:48:41'),(249,4,13,'simple','mtk000',0,0,'2013-03-05 05:48:13','2014-03-08 06:58:09'),(250,4,13,'simple','mtk001',0,0,'2013-03-05 05:48:13','2014-03-08 06:59:32'),(251,4,13,'simple','mtk002',0,0,'2013-03-05 05:48:13','2014-03-08 07:04:27'),(252,4,13,'simple','mtk003',0,0,'2013-03-05 05:48:13','2014-03-08 07:05:29'),(253,4,13,'simple','mtk004',0,0,'2013-03-05 05:48:13','2014-03-08 07:09:39'),(254,4,13,'simple','mtk005',0,0,'2013-03-05 05:48:13','2014-03-08 07:10:02'),(255,4,13,'simple','mtk006',0,0,'2013-03-05 05:48:13','2014-03-08 07:17:54'),(256,4,13,'simple','mtk007',0,0,'2013-03-05 05:48:13','2014-03-08 07:18:15'),(257,4,13,'simple','mtk008',0,0,'2013-03-05 05:48:13','2014-03-08 07:18:39'),(258,4,13,'simple','mtk009',0,0,'2013-03-05 05:48:13','2014-03-08 07:22:10'),(259,4,13,'simple','mtk010',0,0,'2013-03-05 05:48:13','2014-03-08 07:22:33'),(260,4,13,'simple','mtk011',0,0,'2013-03-05 05:48:13','2014-03-08 07:22:59'),(261,4,13,'simple','mtk012',0,0,'2013-03-05 05:48:13','2014-03-08 07:29:36'),(262,4,13,'simple','mtk013',0,0,'2013-03-05 05:48:13','2014-03-08 07:29:12'),(263,4,13,'simple','mtk014',0,0,'2013-03-05 05:48:13','2014-03-08 07:28:42'),(267,4,13,'simple','mpd003',0,0,'2013-03-05 05:48:14','2014-03-08 07:38:23'),(268,4,13,'simple','mpd004',0,0,'2013-03-05 05:48:14','2014-03-08 07:40:15'),(269,4,13,'simple','mpd005',0,0,'2013-03-05 05:48:14','2014-03-08 07:41:01'),(270,4,13,'simple','mpd006',0,0,'2013-03-05 05:48:14','2013-03-11 05:19:24'),(271,4,13,'simple','mpd007',0,0,'2013-03-05 05:48:14','2013-03-11 05:19:55'),(272,4,13,'simple','mpd008',0,0,'2013-03-05 05:48:14','2013-03-11 05:20:15'),(273,4,13,'simple','mpd009',0,0,'2013-03-05 05:48:14','2013-03-11 05:20:35'),(274,4,13,'simple','mpd010',0,0,'2013-03-05 05:48:14','2013-03-11 05:22:36'),(275,4,13,'simple','mpd011',0,0,'2013-03-05 05:48:14','2013-03-11 05:23:23'),(276,4,13,'simple','mpd012',0,0,'2013-03-05 05:48:14','2014-03-08 07:58:12'),(277,4,13,'simple','mpd013',0,0,'2013-03-05 05:48:14','2014-03-08 07:58:35'),(278,4,13,'simple','mpd014',0,0,'2013-03-05 05:48:14','2014-03-08 07:58:57'),(279,4,13,'simple','mpd015',0,0,'2013-03-05 05:48:14','2014-03-08 07:59:18'),(280,4,13,'simple','mpd016',0,0,'2013-03-05 05:48:14','2014-03-08 07:59:41'),(281,4,13,'simple','mpd017',0,0,'2013-03-05 05:48:14','2014-03-08 08:00:04'),(282,4,13,'simple','wbk000',0,0,'2013-03-05 05:48:14','2014-03-07 15:25:34'),(283,4,13,'simple','wbk001',0,0,'2013-03-05 05:48:14','2014-03-07 15:26:42'),(284,4,13,'simple','wbk002L',0,0,'2013-03-05 05:48:14','2013-05-10 21:17:59'),(285,4,13,'simple','wbk003',0,0,'2013-03-05 05:48:14','2014-03-08 08:05:08'),(286,4,13,'simple','wbk004',0,0,'2013-03-05 05:48:14','2014-03-08 08:05:35'),(287,4,13,'simple','wbk005',0,0,'2013-03-05 05:48:14','2014-03-08 08:06:01'),(288,4,13,'simple','wbk006',0,0,'2013-03-05 05:48:14','2014-03-08 08:57:21'),(289,4,13,'simple','wbk007',0,0,'2013-03-05 05:48:14','2014-03-08 08:57:33'),(290,4,13,'simple','wbk008',0,0,'2013-03-05 05:48:14','2014-03-08 08:57:43'),(291,4,13,'simple','wbk009',0,0,'2013-03-05 05:48:14','2014-03-08 08:11:19'),(292,4,13,'simple','wbk010',0,0,'2013-03-05 05:48:14','2014-03-08 08:11:44'),(293,4,13,'simple','wbk011',0,0,'2013-03-05 05:48:14','2014-03-08 08:12:03'),(294,4,13,'simple','wbk012',0,0,'2013-03-05 05:48:14','2014-03-08 08:21:33'),(295,4,13,'simple','wbk013',0,0,'2013-03-05 05:48:14','2014-03-08 08:17:50'),(296,4,13,'simple','wbk014',0,0,'2013-03-05 05:48:14','2014-03-08 08:18:12'),(297,4,13,'simple','wsd000',0,0,'2013-03-05 05:48:15','2014-03-08 08:24:58'),(298,4,13,'simple','wsd001',0,0,'2013-03-05 05:48:15','2014-03-08 08:25:20'),(299,4,13,'simple','wsd002',0,0,'2013-03-05 05:48:15','2014-03-08 08:26:15'),(300,4,13,'simple','wsd003',0,0,'2013-03-05 05:48:15','2014-03-08 08:26:35');
+/*!40000 ALTER TABLE `catalog_product_entity` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `catalog_product_entity_decimal`
+--
+
+DROP TABLE IF EXISTS `catalog_product_entity_decimal`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `catalog_product_entity_decimal` (
+  `value_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Value ID',
+  `entity_type_id` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Entity Type ID',
+  `attribute_id` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Attribute ID',
+  `store_id` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Store ID',
+  `entity_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Entity ID',
+  `value` decimal(12,4) DEFAULT NULL COMMENT 'Value',
+  PRIMARY KEY (`value_id`),
+  UNIQUE KEY `UNQ_CAT_PRD_ENTT_DEC_ENTT_ID_ATTR_ID_STORE_ID` (`entity_id`,`attribute_id`,`store_id`),
+  KEY `IDX_CATALOG_PRODUCT_ENTITY_DECIMAL_STORE_ID` (`store_id`),
+  KEY `IDX_CATALOG_PRODUCT_ENTITY_DECIMAL_ENTITY_ID` (`entity_id`),
+  KEY `IDX_CATALOG_PRODUCT_ENTITY_DECIMAL_ATTRIBUTE_ID` (`attribute_id`),
+  CONSTRAINT `FK_CATALOG_PRODUCT_ENTITY_DECIMAL_STORE_ID_CORE_STORE_STORE_ID` FOREIGN KEY (`store_id`) REFERENCES `core_store` (`store_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_CAT_PRD_ENTT_DEC_ATTR_ID_EAV_ATTR_ATTR_ID` FOREIGN KEY (`attribute_id`) REFERENCES `eav_attribute` (`attribute_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_CAT_PRD_ENTT_DEC_ENTT_ID_CAT_PRD_ENTT_ENTT_ID` FOREIGN KEY (`entity_id`) REFERENCES `catalog_product_entity` (`entity_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=10564 DEFAULT CHARSET=utf8 COMMENT='Catalog Product Decimal Attribute Backend Table';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `catalog_product_entity_decimal`
+--
+
+LOCK TABLES `catalog_product_entity_decimal` WRITE;
+/*!40000 ALTER TABLE `catalog_product_entity_decimal` DISABLE KEYS */;
+INSERT INTO `catalog_product_entity_decimal` VALUES (1790,4,75,0,231,190.0000),(1795,4,75,0,232,190.0000),(1800,4,75,0,233,190.0000),(1805,4,75,0,234,175.0000),(1810,4,75,0,235,175.0000),(1815,4,75,0,236,175.0000),(1820,4,75,0,237,160.0000),(1825,4,75,0,238,160.0000),(1830,4,75,0,239,160.0000),(1835,4,75,0,240,510.0000),(1840,4,75,0,241,510.0000),(1845,4,75,0,242,510.0000),(1850,4,75,0,243,455.0000),(1855,4,75,0,244,455.0000),(1860,4,75,0,245,455.0000),(1865,4,75,0,246,490.0000),(1870,4,75,0,247,490.0000),(1875,4,75,0,248,490.0000),(1880,4,75,0,249,75.0000),(1885,4,75,0,250,75.0000),(1890,4,75,0,251,75.0000),(1895,4,75,0,252,75.0000),(1900,4,75,0,253,75.0000),(1905,4,75,0,254,75.0000),(1910,4,75,0,255,210.0000),(1915,4,75,0,256,210.0000),(1920,4,75,0,257,210.0000),(1925,4,75,0,258,240.0000),(1930,4,75,0,259,240.0000),(1935,4,75,0,260,240.0000),(1940,4,75,0,261,125.0000),(1945,4,75,0,262,125.0000),(1950,4,75,0,263,125.0000),(1970,4,75,0,267,140.0000),(1975,4,75,0,268,140.0000),(1980,4,75,0,269,140.0000),(1985,4,75,0,270,140.0000),(1990,4,75,0,271,140.0000),(1995,4,75,0,272,140.0000),(2000,4,75,0,273,140.0000),(2005,4,75,0,274,140.0000),(2010,4,75,0,275,140.0000),(2015,4,75,0,276,195.0000),(2020,4,75,0,277,195.0000),(2025,4,75,0,278,195.0000),(2030,4,75,0,279,195.0000),(2035,4,75,0,280,195.0000),(2040,4,75,0,281,195.0000),(2045,4,75,0,282,150.0000),(2050,4,75,0,283,150.0000),(2055,4,75,0,284,150.0000),(2060,4,75,0,285,60.0000),(2065,4,75,0,286,60.0000),(2070,4,75,0,287,60.0000),(2075,4,75,0,288,275.0000),(2080,4,75,0,289,275.0000),(2085,4,75,0,290,275.0000),(2090,4,75,0,291,185.0000),(2095,4,75,0,292,185.0000),(2100,4,75,0,293,185.0000),(2105,4,75,0,294,210.0000),(2110,4,75,0,295,210.0000),(2115,4,75,0,296,210.0000),(2120,4,75,0,297,185.0000),(2125,4,75,0,298,185.0000),(2130,4,75,0,299,185.0000),(2135,4,75,0,300,185.0000);
+/*!40000 ALTER TABLE `catalog_product_entity_decimal` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `catalog_product_entity_int`
+--
+
+DROP TABLE IF EXISTS `catalog_product_entity_int`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `catalog_product_entity_int` (
+  `value_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Value ID',
+  `entity_type_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Entity Type ID',
+  `attribute_id` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Attribute ID',
+  `store_id` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Store ID',
+  `entity_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Entity ID',
+  `value` int(11) DEFAULT NULL COMMENT 'Value',
+  PRIMARY KEY (`value_id`),
+  UNIQUE KEY `UNQ_CATALOG_PRODUCT_ENTITY_INT_ENTITY_ID_ATTRIBUTE_ID_STORE_ID` (`entity_id`,`attribute_id`,`store_id`),
+  KEY `IDX_CATALOG_PRODUCT_ENTITY_INT_ATTRIBUTE_ID` (`attribute_id`),
+  KEY `IDX_CATALOG_PRODUCT_ENTITY_INT_STORE_ID` (`store_id`),
+  KEY `IDX_CATALOG_PRODUCT_ENTITY_INT_ENTITY_ID` (`entity_id`),
+  CONSTRAINT `FK_CATALOG_PRODUCT_ENTITY_INT_STORE_ID_CORE_STORE_STORE_ID` FOREIGN KEY (`store_id`) REFERENCES `core_store` (`store_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_CAT_PRD_ENTT_INT_ATTR_ID_EAV_ATTR_ATTR_ID` FOREIGN KEY (`attribute_id`) REFERENCES `eav_attribute` (`attribute_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_CAT_PRD_ENTT_INT_ENTT_ID_CAT_PRD_ENTT_ENTT_ID` FOREIGN KEY (`entity_id`) REFERENCES `catalog_product_entity` (`entity_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=21408 DEFAULT CHARSET=utf8 COMMENT='Catalog Product Integer Attribute Backend Table';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `catalog_product_entity_int`
+--
+
+LOCK TABLES `catalog_product_entity_int` WRITE;
+/*!40000 ALTER TABLE `catalog_product_entity_int` DISABLE KEYS */;
+INSERT INTO `catalog_product_entity_int` VALUES (4068,4,96,0,231,1),(4085,4,96,0,232,1),(4102,4,96,0,233,1),(4119,4,96,0,234,1),(4136,4,96,0,235,1),(4153,4,96,0,236,1),(4170,4,96,0,237,1),(4187,4,96,0,238,1),(4204,4,96,0,239,1),(4221,4,96,0,240,1),(4238,4,96,0,241,1),(4255,4,96,0,242,1),(4272,4,96,0,243,1),(4289,4,96,0,244,1),(4306,4,96,0,245,1),(4323,4,96,0,246,1),(4340,4,96,0,247,1),(4357,4,96,0,248,1),(4374,4,96,0,249,1),(4391,4,96,0,250,1),(4408,4,96,0,251,1),(4425,4,96,0,252,1),(4442,4,96,0,253,1),(4459,4,96,0,254,1),(4476,4,96,0,255,1),(4493,4,96,0,256,1),(4510,4,96,0,257,1),(4527,4,96,0,258,1),(4544,4,96,0,259,1),(4561,4,96,0,260,1),(4578,4,96,0,261,1),(4595,4,96,0,262,1),(4612,4,96,0,263,1),(4680,4,96,0,267,1),(4697,4,96,0,268,1),(4714,4,96,0,269,1),(4731,4,96,0,270,1),(4748,4,96,0,271,1),(4765,4,96,0,272,1),(4782,4,96,0,273,1),(4799,4,96,0,274,1),(4816,4,96,0,275,1),(4833,4,96,0,276,1),(4850,4,96,0,277,1),(4867,4,96,0,278,1),(4884,4,96,0,279,1),(4901,4,96,0,280,1),(4918,4,96,0,281,1),(4935,4,96,0,282,1),(4952,4,96,0,283,1),(4969,4,96,0,284,1),(4986,4,96,0,285,1),(5003,4,96,0,286,1),(5020,4,96,0,287,1),(5037,4,96,0,288,1),(5054,4,96,0,289,1),(5071,4,96,0,290,1),(5088,4,96,0,291,1),(5105,4,96,0,292,1),(5122,4,96,0,293,1),(5139,4,96,0,294,1),(5156,4,96,0,295,1),(5173,4,96,0,296,1),(5190,4,96,0,297,1),(5207,4,96,0,298,1),(5224,4,96,0,299,1),(5241,4,96,0,300,1);
+/*!40000 ALTER TABLE `catalog_product_entity_int` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `catalog_product_entity_varchar`
+--
+
+DROP TABLE IF EXISTS `catalog_product_entity_varchar`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `catalog_product_entity_varchar` (
+  `value_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Value ID',
+  `entity_type_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Entity Type ID',
+  `attribute_id` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Attribute ID',
+  `store_id` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Store ID',
+  `entity_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Entity ID',
+  `value` varchar(255) DEFAULT NULL COMMENT 'Value',
+  PRIMARY KEY (`value_id`),
+  UNIQUE KEY `UNQ_CAT_PRD_ENTT_VCHR_ENTT_ID_ATTR_ID_STORE_ID` (`entity_id`,`attribute_id`,`store_id`),
+  KEY `IDX_CATALOG_PRODUCT_ENTITY_VARCHAR_ATTRIBUTE_ID` (`attribute_id`),
+  KEY `IDX_CATALOG_PRODUCT_ENTITY_VARCHAR_STORE_ID` (`store_id`),
+  KEY `IDX_CATALOG_PRODUCT_ENTITY_VARCHAR_ENTITY_ID` (`entity_id`),
+  CONSTRAINT `FK_CATALOG_PRODUCT_ENTITY_VARCHAR_STORE_ID_CORE_STORE_STORE_ID` FOREIGN KEY (`store_id`) REFERENCES `core_store` (`store_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_CAT_PRD_ENTT_VCHR_ATTR_ID_EAV_ATTR_ATTR_ID` FOREIGN KEY (`attribute_id`) REFERENCES `eav_attribute` (`attribute_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_CAT_PRD_ENTT_VCHR_ENTT_ID_CAT_PRD_ENTT_ENTT_ID` FOREIGN KEY (`entity_id`) REFERENCES `catalog_product_entity` (`entity_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=40496 DEFAULT CHARSET=utf8 COMMENT='Catalog Product Varchar Attribute Backend Table';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `catalog_product_entity_varchar`
+--
+
+LOCK TABLES `catalog_product_entity_varchar` WRITE;
+/*!40000 ALTER TABLE `catalog_product_entity_varchar` DISABLE KEYS */;
+INSERT INTO `catalog_product_entity_varchar` VALUES (7602,4,71,0,231,'French Cuff Cotton Twill Oxford'),(7610,4,87,0,231,'/m/s/msj000t_1.jpg'),(7620,4,71,0,232,'French Cuff Cotton Twill Oxford'),(7628,4,87,0,232,'/m/s/msj000t_1.jpg'),(7638,4,71,0,233,'French Cuff Cotton Twill Oxford'),(7646,4,87,0,233,'/m/s/msj000t_1.jpg'),(7656,4,71,0,234,'Slim fit Dobby Oxford Shirt'),(7664,4,87,0,234,'/m/s/msj003t_1.jpg'),(7674,4,71,0,235,'Slim fit Dobby Oxford Shirt'),(7682,4,87,0,235,'/m/s/msj003t_1.jpg'),(7692,4,71,0,236,'Slim fit Dobby Oxford Shirt'),(7700,4,87,0,236,'/m/s/msj003t_1.jpg'),(7710,4,71,0,237,'Plaid Cotton Shirt'),(7718,4,87,0,237,'/m/s/msj006t_1.jpg'),(7728,4,71,0,238,'Plaid Cotton Shirt'),(7736,4,87,0,238,'/m/s/msj006t_2.jpg'),(7746,4,71,0,239,'Plaid Cotton Shirt'),(7754,4,87,0,239,'/m/s/msj006t_3.jpg'),(7764,4,71,0,240,'Sullivan Sport Coat'),(7772,4,87,0,240,'/m/s/msj009t_1.jpg'),(7782,4,71,0,241,'Sullivan Sport Coat'),(7790,4,87,0,241,'/m/s/msj009t_2.jpg'),(7800,4,71,0,242,'Sullivan Sport Coat'),(7808,4,87,0,242,'/m/s/msj009t_3.jpg'),(7818,4,71,0,243,'Linen Blazer'),(7826,4,87,0,243,'/m/s/msj012t_1.jpg'),(7836,4,71,0,244,'Linen Blazer'),(7844,4,87,0,244,'/m/s/msj012t_1.jpg'),(7854,4,71,0,245,'Linen Blazer'),(7862,4,87,0,245,'/m/s/msj012t_1.jpg'),(7872,4,71,0,246,'Stretch Cotton Blazer'),(7880,4,87,0,246,'/m/s/msj015t_2.jpg'),(7890,4,71,0,247,'Stretch Cotton Blazer'),(7898,4,87,0,247,'/m/s/msj015t_3.jpg'),(7908,4,71,0,248,'Stretch Cotton Blazer'),(7916,4,87,0,248,'/m/s/msj015t_4.jpg'),(7926,4,71,0,249,'Chelsea Tee'),(7934,4,87,0,249,'/m/t/mtk000t_3.jpg'),(7944,4,71,0,250,'Chelsea Tee'),(7952,4,87,0,250,'/m/t/mtk000t_4.jpg'),(7962,4,71,0,251,'Chelsea Tee'),(7970,4,87,0,251,'/m/t/mtk002t_3.jpg'),(7980,4,71,0,252,'Chelsea Tee'),(7988,4,87,0,252,'/m/t/mtk002t_4.jpg'),(7998,4,71,0,253,'Chelsea Tee'),(8006,4,87,0,253,'/m/t/mtk004t_3.jpg'),(8016,4,71,0,254,'Chelsea Tee'),(8024,4,87,0,254,'/m/t/mtk004t_4.jpg'),(8034,4,71,0,255,'Merino V-neck Pullover Sweater'),(8042,4,87,0,255,'/m/t/mtk006t_1.jpg'),(8052,4,71,0,256,'Merino V-neck Pullover Sweater'),(8060,4,87,0,256,'/m/t/mtk006t_2.jpg'),(8070,4,71,0,257,'Merino V-neck Pullover Sweater'),(8078,4,87,0,257,'/m/t/mtk006t_3.jpg'),(8088,4,71,0,258,'Lexington Cardigan Sweater'),(8096,4,87,0,258,'/m/t/mtk009t_1.jpg'),(8106,4,71,0,259,'Lexington Cardigan Sweater'),(8114,4,87,0,259,'/m/t/mtk009t_2.jpg'),(8124,4,71,0,260,'Lexington Cardigan Sweater'),(8132,4,87,0,260,'/m/t/mtk009t_3.jpg'),(8142,4,71,0,261,'Core Striped Sport Shirt'),(8150,4,87,0,261,'/m/t/mtk012t_3.jpg'),(8160,4,71,0,262,'Core Striped Sport Shirt'),(8168,4,87,0,262,'/m/t/mtk012t_2.jpg'),(8178,4,71,0,263,'Core Striped Sport Shirt'),(8186,4,87,0,263,'/m/t/mtk012t_1.jpg'),(8250,4,71,0,267,'Bowery Chino Pants'),(8258,4,87,0,267,'/m/p/mpd003t_2.jpg'),(8268,4,71,0,268,'Bowery Chino Pants'),(8276,4,87,0,268,'/m/p/mpd003t_3.jpg'),(8286,4,71,0,269,'Bowery Chino Pants'),(8294,4,87,0,269,'/m/p/mpd003t_4.jpg'),(8304,4,71,0,270,'The Essential Boot Cut Jean'),(8312,4,87,0,270,'/m/p/mpd006t_1.jpg'),(8322,4,71,0,271,'The Essential Boot Cut Jean'),(8330,4,87,0,271,'/m/p/mpd006t_1.jpg'),(8340,4,71,0,272,'The Essential Boot Cut Jean'),(8348,4,87,0,272,'/m/p/mpd006t_1.jpg'),(8358,4,71,0,273,'The Essential Boot Cut Jean'),(8366,4,87,0,273,'/m/p/mpd006t_1.jpg'),(8376,4,71,0,274,'The Essential Boot Cut Jean'),(8384,4,87,0,274,'/m/p/mpd006t_1.jpg'),(8394,4,71,0,275,'The Essential Boot Cut Jean'),(8402,4,87,0,275,'/m/p/mpd006t_1.jpg'),(8412,4,71,0,276,'Flat Front  Trouser'),(8420,4,87,0,276,'/m/p/mpd012t_1.jpg'),(8430,4,71,0,277,'Flat Front  Trouser'),(8438,4,87,0,277,'/m/p/mpd012t_2.jpg'),(8448,4,71,0,278,'Flat Front  Trouser'),(8456,4,87,0,278,'/m/p/mpd012t_3.jpg'),(8466,4,71,0,279,'Flat Front  Trouser'),(8474,4,87,0,279,'/m/p/mpd012t_4.jpg'),(8484,4,71,0,280,'Flat Front  Trouser'),(8492,4,87,0,280,'/m/p/mpd012t_5.jpg'),(8502,4,71,0,281,'Flat Front  Trouser'),(8510,4,87,0,281,'/m/p/mpd012t_6.jpg'),(8520,4,71,0,282,'NoLIta Cami'),(8528,4,87,0,282,'/w/b/wbk000t_2.jpg'),(8538,4,71,0,283,'NoLIta Cami'),(8546,4,87,0,283,'/w/b/wbk000t_3.jpg'),(8556,4,71,0,284,'Black NoLIta Cami'),(8564,4,87,0,284,'/w/b/wbk002t.jpg'),(8574,4,71,0,285,'Tori Tank'),(8582,4,87,0,285,'/w/b/wbk003t_1.jpg'),(8592,4,71,0,286,'Tori Tank'),(8600,4,87,0,286,'/w/b/wbk003t_2.jpg'),(8610,4,71,0,287,'Tori Tank'),(8618,4,87,0,287,'/w/b/wbk003t_3.jpg'),(8628,4,71,0,288,'Delancy Cardigan Sweater'),(8636,4,87,0,288,'/w/b/wbk006t_1.jpg'),(8646,4,71,0,289,'Delancy Cardigan Sweater'),(8654,4,87,0,289,'/w/b/wbk006t_1.jpg'),(8664,4,71,0,290,'Delancy Cardigan Sweater'),(8672,4,87,0,290,'/w/b/wbk006t_1.jpg'),(8682,4,71,0,291,'Ludlow Oxford Top'),(8690,4,87,0,291,'/w/b/wbk009t_2.jpg'),(8700,4,71,0,292,'Ludlow Oxford Top'),(8708,4,87,0,292,'/w/b/wbk009t_3.jpg'),(8718,4,71,0,293,'Ludlow Oxford Top'),(8726,4,87,0,293,'/w/b/wbk009t_4.jpg'),(8736,4,71,0,294,'Elizabeth Knit Top'),(8744,4,87,0,294,'/w/b/wbk012t_2.jpg'),(8754,4,71,0,295,'Elizabeth Knit Top'),(8762,4,87,0,295,'/w/b/wbk012t_3.jpg'),(8772,4,71,0,296,'Elizabeth Knit Top'),(8780,4,87,0,296,'/w/b/wbk012t_4.jpg'),(8790,4,71,0,297,'Essex Pencil Skirt'),(8798,4,87,0,297,'/w/s/wsd000t_1.jpg'),(8808,4,71,0,298,'Essex Pencil Skirt'),(8816,4,87,0,298,'/w/s/wsd000t_2.jpg'),(8826,4,71,0,299,'Essex Pencil Skirt'),(8834,4,87,0,299,'/w/s/wsd000t_3.jpg'),(8844,4,71,0,300,'Essex Pencil Skirt'),(8852,4,87,0,300,'/w/s/wsd000t_4.jpg');
+/*!40000 ALTER TABLE `catalog_product_entity_varchar` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `core_config_data`
+--
+
+DROP TABLE IF EXISTS `core_config_data`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `core_config_data` (
+  `config_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Config Id',
+  `scope` varchar(8) NOT NULL DEFAULT 'default' COMMENT 'Config Scope',
+  `scope_id` int(11) NOT NULL DEFAULT '0' COMMENT 'Config Scope Id',
+  `path` varchar(255) NOT NULL DEFAULT 'general' COMMENT 'Config Path',
+  `value` text COMMENT 'Config Value',
+  PRIMARY KEY (`config_id`),
+  UNIQUE KEY `UNQ_CORE_CONFIG_DATA_SCOPE_SCOPE_ID_PATH` (`scope`,`scope_id`,`path`)
+) ENGINE=InnoDB AUTO_INCREMENT=1518 DEFAULT CHARSET=utf8 COMMENT='Config Data';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `core_config_data`
+--
+
+LOCK TABLES `core_config_data` WRITE;
+/*!40000 ALTER TABLE `core_config_data` DISABLE KEYS */;
+INSERT INTO `core_config_data` VALUES (9,'default',0,'currency/options/base','USD');
+/*!40000 ALTER TABLE `core_config_data` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `eav_attribute`
+--
+
+DROP TABLE IF EXISTS `eav_attribute`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `eav_attribute` (
+  `attribute_id` smallint(5) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Attribute Id',
+  `entity_type_id` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Entity Type Id',
+  `attribute_code` varchar(255) DEFAULT NULL COMMENT 'Attribute Code',
+  `attribute_model` varchar(255) DEFAULT NULL COMMENT 'Attribute Model',
+  `backend_model` varchar(255) DEFAULT NULL COMMENT 'Backend Model',
+  `backend_type` varchar(8) NOT NULL DEFAULT 'static' COMMENT 'Backend Type',
+  `backend_table` varchar(255) DEFAULT NULL COMMENT 'Backend Table',
+  `frontend_model` varchar(255) DEFAULT NULL COMMENT 'Frontend Model',
+  `frontend_input` varchar(50) DEFAULT NULL COMMENT 'Frontend Input',
+  `frontend_label` varchar(255) DEFAULT NULL COMMENT 'Frontend Label',
+  `frontend_class` varchar(255) DEFAULT NULL COMMENT 'Frontend Class',
+  `source_model` varchar(255) DEFAULT NULL COMMENT 'Source Model',
+  `is_required` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Defines Is Required',
+  `is_user_defined` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Defines Is User Defined',
+  `default_value` text COMMENT 'Default Value',
+  `is_unique` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Defines Is Unique',
+  `note` varchar(255) DEFAULT NULL COMMENT 'Note',
+  PRIMARY KEY (`attribute_id`),
+  UNIQUE KEY `UNQ_EAV_ATTRIBUTE_ENTITY_TYPE_ID_ATTRIBUTE_CODE` (`entity_type_id`,`attribute_code`),
+  KEY `IDX_EAV_ATTRIBUTE_ENTITY_TYPE_ID` (`entity_type_id`),
+  CONSTRAINT `FK_EAV_ATTRIBUTE_ENTITY_TYPE_ID_EAV_ENTITY_TYPE_ENTITY_TYPE_ID` FOREIGN KEY (`entity_type_id`) REFERENCES `eav_entity_type` (`entity_type_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=210 DEFAULT CHARSET=utf8 COMMENT='Eav Attribute';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `eav_attribute`
+--
+
+LOCK TABLES `eav_attribute` WRITE;
+/*!40000 ALTER TABLE `eav_attribute` DISABLE KEYS */;
+INSERT INTO `eav_attribute` VALUES (41,3,'name',NULL,NULL,'varchar',NULL,NULL,'text','Name',NULL,NULL,1,0,NULL,0,NULL),(42,3,'is_active',NULL,NULL,'int',NULL,NULL,'select','Is Active',NULL,'eav/entity_attribute_source_boolean',1,0,NULL,0,NULL),(71,4,'name',NULL,NULL,'varchar',NULL,NULL,'text','Name',NULL,NULL,1,0,NULL,0,NULL),(75,4,'price',NULL,'catalog/product_attribute_backend_price','decimal',NULL,NULL,'price','Price',NULL,NULL,1,0,NULL,0,NULL),(87,4,'thumbnail',NULL,NULL,'varchar',NULL,'catalog/product_attribute_frontend_image','media_image','Thumbnail',NULL,NULL,0,0,NULL,0,NULL),(96,4,'status',NULL,NULL,'int',NULL,NULL,'select','Status',NULL,'catalog/product_status',1,0,NULL,0,NULL),(133,3,'thumbnail',NULL,'catalog/category_attribute_backend_image','varchar',NULL,NULL,'image','Thumbnail Image',NULL,NULL,0,0,NULL,0,NULL);
+/*!40000 ALTER TABLE `eav_attribute` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `eav_entity_type`
+--
+
+DROP TABLE IF EXISTS `eav_entity_type`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `eav_entity_type` (
+  `entity_type_id` smallint(5) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Entity Type Id',
+  `entity_type_code` varchar(50) NOT NULL COMMENT 'Entity Type Code',
+  `entity_model` varchar(255) NOT NULL COMMENT 'Entity Model',
+  `attribute_model` varchar(255) DEFAULT NULL COMMENT 'Attribute Model',
+  `entity_table` varchar(255) DEFAULT NULL COMMENT 'Entity Table',
+  `value_table_prefix` varchar(255) DEFAULT NULL COMMENT 'Value Table Prefix',
+  `entity_id_field` varchar(255) DEFAULT NULL COMMENT 'Entity Id Field',
+  `is_data_sharing` smallint(5) unsigned NOT NULL DEFAULT '1' COMMENT 'Defines Is Data Sharing',
+  `data_sharing_key` varchar(100) DEFAULT 'default' COMMENT 'Data Sharing Key',
+  `default_attribute_set_id` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Default Attribute Set Id',
+  `increment_model` varchar(255) DEFAULT '' COMMENT 'Increment Model',
+  `increment_per_store` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Increment Per Store',
+  `increment_pad_length` smallint(5) unsigned NOT NULL DEFAULT '8' COMMENT 'Increment Pad Length',
+  `increment_pad_char` varchar(1) NOT NULL DEFAULT '0' COMMENT 'Increment Pad Char',
+  `additional_attribute_table` varchar(255) DEFAULT '' COMMENT 'Additional Attribute Table',
+  `entity_attribute_collection` varchar(255) DEFAULT NULL COMMENT 'Entity Attribute Collection',
+  PRIMARY KEY (`entity_type_id`),
+  KEY `IDX_EAV_ENTITY_TYPE_ENTITY_TYPE_CODE` (`entity_type_code`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='Eav Entity Type';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `eav_entity_type`
+--
+
+LOCK TABLES `eav_entity_type` WRITE;
+/*!40000 ALTER TABLE `eav_entity_type` DISABLE KEYS */;
+INSERT INTO `eav_entity_type` VALUES (1,'customer','customer/customer','customer/attribute','customer/entity',NULL,NULL,1,'default',1,'eav/entity_increment_numeric',0,8,'0','customer/eav_attribute','customer/attribute_collection'),(2,'customer_address','customer/address','customer/attribute','customer/address_entity',NULL,NULL,1,'default',2,NULL,0,8,'0','customer/eav_attribute','customer/address_attribute_collection'),(3,'catalog_category','catalog/category','catalog/resource_eav_attribute','catalog/category',NULL,NULL,1,'default',3,NULL,0,8,'0','catalog/eav_attribute','catalog/category_attribute_collection'),(4,'catalog_product','catalog/product','catalog/resource_eav_attribute','catalog/product',NULL,NULL,1,'default',4,NULL,0,8,'0','catalog/eav_attribute','catalog/product_attribute_collection'),(5,'order','sales/order',NULL,'sales/order',NULL,NULL,1,'default',0,'eav/entity_increment_numeric',1,8,'0',NULL,NULL),(6,'invoice','sales/order_invoice',NULL,'sales/invoice',NULL,NULL,1,'default',0,'eav/entity_increment_numeric',1,8,'0',NULL,NULL),(7,'creditmemo','sales/order_creditmemo',NULL,'sales/creditmemo',NULL,NULL,1,'default',0,'eav/entity_increment_numeric',1,8,'0',NULL,NULL),(8,'shipment','sales/order_shipment',NULL,'sales/shipment',NULL,NULL,1,'default',0,'eav/entity_increment_numeric',1,8,'0',NULL,NULL);
+/*!40000 ALTER TABLE `eav_entity_type` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2019-05-04 16:27:58

@@ -47,6 +47,11 @@ abstract class ModuleAbstract
         $this->config = $config;
     }
 
+    public function setDbConnection(\Logshub\EcommerceSynch\File\Config $config)
+    {
+        $this->config = $config;
+    }
+
     public function getDbPrefix()
     {
         $prefix = $this->config->getInput('db_prefix');
@@ -81,6 +86,11 @@ abstract class ModuleAbstract
         ENCLOSED BY '\"'
         LINES TERMINATED BY '\n';
         ";
+    }
+
+    public function beforeProductsCsv(\PDO $db)
+    {
+        // eg. selecting meta data
     }
 
     /**

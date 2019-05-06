@@ -8,6 +8,7 @@ other system eg. LogsHub.com search service.
 
 ### Supported eCommerce platforms
 
+* Magento 1 (1.9.4.1)
 * WooCommerce (5.1.1)
 * PrestaShop (1.6.1.10 - 1.7.5.1)
 * OpenCart (2.1.0.2 - X)

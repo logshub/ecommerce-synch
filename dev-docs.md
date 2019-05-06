@@ -52,6 +52,9 @@ GRANT ALL ON sylius.* TO sylius IDENTIFIED BY 'password';
 CREATE DATABASE woocommerce;
 GRANT ALL ON woocommerce.* TO woocommerce IDENTIFIED BY 'password';
 
+CREATE DATABASE magento19;
+GRANT ALL ON magento19.* TO oscommerce IDENTIFIED BY 'password';
+
 FLUSH privileges;
 ```
 
@@ -63,6 +66,7 @@ mysqldump --host=192.168.1.141 -u oscommerce -ppassword oscommerce242 osc_produc
 mysqldump --host=192.168.1.141 -u oscommerce -ppassword prestashop1751 newprefix_product newprefix_product_lang newprefix_currency_shop newprefix_currency newprefix_image newprefix_category newprefix_category_lang newprefix_category_product >> testdatabase.sql
 mysqldump --host=192.168.1.141 -u oscommerce -ppassword sylius sylius_product sylius_product_translation sylius_product_image sylius_taxon sylius_taxon_translation sylius_product_variant sylius_channel_pricing sylius_channel sylius_currency >> testdatabase.sql
 mysqldump --host=192.168.1.141 -u oscommerce -ppassword woocommerce wp_posts wp_postmeta wp_options wp_term_relationships wp_term_taxonomy wp_terms >> testdatabase.sql
+mysqldump --host=192.168.1.141 -u oscommerce -ppassword magento19 core_config_data catalog_category_product catalog_category_entity catalog_category_entity_varchar catalog_category_entity_int catalog_product_entity catalog_product_entity_varchar catalog_product_entity_int catalog_product_entity_decimal eav_entity_type eav_attribute >> testdatabase.sql
 
 mysql --host=192.168.1.141 -u oscommerce -ppassword testdatabase < testdatabase.sql
 ```
@@ -81,6 +85,16 @@ update sylius_taxon_translation set description = '';
 update wp_posts set post_content = '';
 update wp_options set configuration_description = '';
 update osc_configuration set configuration_description = '';
+
+# magento 1
+DELETE FROM catalog_category_entity_int WHERE attribute_id != 42;
+DELETE FROM catalog_category_entity_varchar WHERE attribute_id != 41;
+DELETE FROM catalog_product_entity WHERE entity_id > 300;
+DELETE FROM catalog_product_entity_decimal WHERE attribute_id != 75;
+DELETE FROM catalog_product_entity_int WHERE attribute_id != 96;
+DELETE FROM catalog_product_entity_varchar WHERE attribute_id NOT IN(71,87);
+DELETE FROM core_config_data WHERE path != 'currency/options/base';
+DELETE FROM eav_attribute WHERE attribute_code NOT IN('name','status','thumbnail','price','is_active');
 ```
 
 ### osCommerce
@@ -147,15 +161,62 @@ server {
 
     # Pass to php
     location ~ \.php$ {
-        if (!-f $request_filename) { return 404; }
+      if (!-f $request_filename) { return 404; }
 
-	fastcgi_split_path_info ^(/update/index.php)(/.+)$;
-	fastcgi_pass   myapp_phpfpm_oscommerce.local;
-	fastcgi_index  index.php;
-	fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
-	fastcgi_param REDIRECT_STATUS 200;
-	fastcgi_param  PATH_INFO        $fastcgi_path_info;
-	include        fastcgi_params;
+      fastcgi_split_path_info ^(/update/index.php)(/.+)$;
+      fastcgi_pass   myapp_phpfpm_oscommerce.local;
+      fastcgi_index  index.php;
+      fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+      fastcgi_param REDIRECT_STATUS 200;
+      fastcgi_param  PATH_INFO        $fastcgi_path_info;
+      include        fastcgi_params;
     }
+}
+```
+
+## Magento 1.9
+
+```
+upstream myapp_phpfpm_magento19.local {
+  server unix:/run/php/php7.2-fpm.sock;
+}
+
+server {
+  listen 80;
+
+  root /var/www/magento19;
+  index index.php;
+
+  server_name magento19.local;
+
+  location / {
+    try_files $uri $uri/ /index.php?q=$uri&$args;
+  }
+
+  error_page 404 /404.html;
+
+  error_page 500 502 503 504 /50x.html;
+  location = /50x.html {
+    root /usr/share/nginx/www;
+  }
+
+  location ~ .php$ {
+    # fastcgi_split_path_info ^(/update/index.php)(/.+)$;
+    fastcgi_pass myapp_phpfpm_magento19.local;
+    fastcgi_index  index.php;
+    fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+    fastcgi_param REDIRECT_STATUS 200;
+    fastcgi_param  PATH_INFO        $fastcgi_path_info;
+    include        fastcgi_params;
+  }
+
+  location ~* .(js|css|png|jpg|jpeg|gif|ico)$ {
+    expires 1y;
+  }
+
+  location ~* .(htm|html)$ {
+    expires 1m;
+  }
+
 }
 ```

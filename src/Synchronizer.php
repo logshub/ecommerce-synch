@@ -79,6 +79,7 @@ class Synchronizer
             $lastImportDate = $this->getImportLog()->getLastImportDate();
         }
         $input = $this->getInputModule();
+        $input->beforeProductsCsv($this->getDbConnection());
         $sql = $input->getProductsSql($lastImportDate);
         $filePath = $input->getDumpFilePath(true);
 
@@ -185,9 +186,10 @@ class Synchronizer
     }
 
     /**
+     * @return \PDO
      * @throws \PDOException
      */
-    protected function getDbConnection()
+    public function getDbConnection()
     {
         if ($this->db) {
             return $this->db;
