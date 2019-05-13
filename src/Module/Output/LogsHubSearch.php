@@ -22,13 +22,13 @@ class LogsHubSearch extends ModuleAbstract
             '--csv-separator', ';'
         ];
         if ($isCategoriesPush) {
-            $cmdArray = array_merge($cmdArray, ['--categories']);
+            $cmdArray[] = '--categories';
         }
         
         $process = new Process($cmdArray);
         $process->run();
         if (!$process->isSuccessful()) {
-            throw new Exception('Synchronization error '.$process->getErrorOutput().'Command: ' . \implode(' ', $cmdArray));
+            throw new Exception('Synchronization error '.$process->getErrorOutput() . '; exit code text: ' . $process->getExitCodeText().'; command: ' . \implode(' ', $cmdArray));
         }
 
         return $process->getOutput();

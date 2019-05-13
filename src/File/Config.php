@@ -106,8 +106,10 @@ class Config extends \Logshub\SearchClient\Config\File
     public function getRootAbsolutePath()
     {
         $paths = [
-            \dirname(__FILE__) . '/../../',
-            \dirname(__FILE__) . '/../../../../../',
+            // if it is in project
+            \dirname(\dirname(\dirname(__FILE__))) . '/',
+            // if it is loaded by composer
+            \dirname(\dirname(\dirname(\dirname(\dirname(\dirname(__FILE__)))))) . '/',
         ];
         foreach ($paths as $path) {
             if (\file_exists($path . 'vendor/')) {

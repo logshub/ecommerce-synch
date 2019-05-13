@@ -45,7 +45,7 @@ Example:
 cd /var/www/
 mkdir ecommerce-synch
 cd ecommerce-synch/
-composer require logshub/ecommerce-synch:^1.0.2
+composer require logshub/ecommerce-synch
 cp vendor/logshub/ecommerce-synch/config.example.ini config.ini
 # setup credentials + input module
 nano config.ini
