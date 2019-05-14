@@ -222,3 +222,68 @@ server {
 
 }
 ```
+
+## Magento 1.6
+
+```
+upstream myapp_phpfpm_magento16.local {
+  server unix:/run/php/php7.0-fpm.sock;
+}
+
+server { 
+	listen 80; 
+	root /var/www/magento16;
+    index index.php;
+
+    server_name magento16.local;
+	 
+	## These locations would be hidden by .htaccess normally 
+	location ^~ /app/                { deny all; } 
+	location ^~ /includes/           { deny all; } 
+	location ^~ /lib/                { deny all; } 
+	location ^~ /media/downloadable/ { deny all; } 
+	location ^~ /pkginfo/            { deny all; } 
+	location ^~ /report/config.xml   { deny all; } 
+	location ^~ /var/                { deny all; } 
+	location /var/export/            { deny all; } 
+	 
+	# deny htaccess files 
+	location ~ /\. { 
+		deny  all; 
+		access_log off; 
+		log_not_found off; 
+	} 
+	 
+	location ~*  \.(jpg|jpeg|png|gif|ico)$ { 
+		expires 365d; 
+		log_not_found off; 
+		access_log off; 
+	} 
+	 
+	location ~ .php/ { ## Forward paths like /js/index.php/x.js to relevant handler 
+		rewrite ^(.*.php)/ $1 last; 
+	}
+
+	## rewrite anything else to index.php
+	location / { 
+		index index.html index.php;
+		try_files $uri $uri/ /index.php?$query_string;
+		expires 30d;
+		rewrite /api/rest /api.php?type=rest;
+	}
+	 
+	# pass the PHP scripts to FPM socket 
+	location ~ \.php$ { 
+		fastcgi_pass myapp_phpfpm_magento16.local;
+		fastcgi_param MAGE_RUN_TYPE store;
+		# fastcgi_param  MAGE_RUN_CODE $MAGE_RUN_CODE;
+		fastcgi_index index.php; 
+		fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+    fastcgi_param SCRIPT_NAME /index.php;
+    fastcgi_param REDIRECT_STATUS 200;
+    fastcgi_param  PATH_INFO        $fastcgi_path_info;
+		include        fastcgi_params;
+		# include fastcgi.conf; 
+	}
+}
+```

@@ -55,7 +55,7 @@ abstract class ModuleAbstract
     public function getDbPrefix()
     {
         $prefix = $this->config->getInput('db_prefix');
-        if (!preg_match('/^[a-z_]*$/', $prefix)) {
+        if (!preg_match('/^[a-zA-Z0-9_]*$/', $prefix)) {
             throw new Exception('Database prefix is not valid');
         }
         return $prefix;
