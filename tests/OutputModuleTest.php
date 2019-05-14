@@ -15,12 +15,27 @@ final class OutputModuleTest extends \PHPUnit\Framework\TestCase
 
     public function testSingleModule()
     {
-        $module = Module\Registrar::getOutput($this->getConfig());
+        $conf = $this->getConfig();
+        $module = Module\Registrar::getOutput($conf);
         $this->assertInstanceOf(Module\Output\ModuleAbstract::class, $module);
         $this->assertInstanceOf(Module\Output\LogsHubSearch::class, $module);
 
         $this->expectException(\Logshub\EcommerceSynch\Exception::class);
         $module->push('non-existing-csv-file');
+    }
+
+    public function testModuleWithWrongExe()
+    {
+        $conf = $this->getConfig();
+        $conf->setOutput([
+            'module' => 'logshub-search',
+            'logshub_search_client_exe' => 'non-existing',
+        ]);
+        $module = Module\Registrar::getOutput($conf);
+
+        // Logshub client command not found
+        $this->expectException(\Logshub\EcommerceSynch\Exception::class);
+        $module->push(\dirname(__FILE__) . '/testimportslog.csv');
     }
 
     private function getConfig()

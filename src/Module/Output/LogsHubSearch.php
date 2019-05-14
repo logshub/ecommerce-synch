@@ -13,9 +13,8 @@ class LogsHubSearch extends ModuleAbstract
 
     public function push($csvPath, $isCategoriesPush = false)
     {
-        $clientPath = $this->config->getRootAbsolutePath() . 'vendor/bin/logshub-search';
         $cmdArray = [
-            'php', $clientPath, 'index:csv',
+            'php', $this->getCmdPath(), 'index:csv',
             '--config', $this->config->getFilePath(),
             '--csv', $csvPath,
             '--domain', $this->config->getApiDomain(),
@@ -62,5 +61,18 @@ class LogsHubSearch extends ModuleAbstract
             $this->config->getApiHash(),
             $this->config->getApiSecret()
         );
+    }
+
+    protected function getCmdPath()
+    {
+        $pathFromConfig = $this->config->getOutputOption('logshub_search_client_exe');
+        if ($pathFromConfig){
+            if (!\file_exists($pathFromConfig)){
+                throw new Exception('Logshub client command not found');
+            }
+            return $pathFromConfig;
+        }
+
+        return $this->config->getRootAbsolutePath() . 'vendor/bin/logshub-search';
     }
 }

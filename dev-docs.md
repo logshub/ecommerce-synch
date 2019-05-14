@@ -54,6 +54,8 @@ GRANT ALL ON woocommerce.* TO woocommerce IDENTIFIED BY 'password';
 
 CREATE DATABASE magento19;
 GRANT ALL ON magento19.* TO oscommerce IDENTIFIED BY 'password';
+CREATE DATABASE magento16;
+GRANT ALL ON magento16.* TO oscommerce IDENTIFIED BY 'password';
 
 FLUSH privileges;
 ```

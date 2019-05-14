@@ -54,6 +54,11 @@ class Config extends \Logshub\SearchClient\Config\File
     {
         $this->input = $input;
     }
+
+    public function setOutput(array $output)
+    {
+        $this->output = $output;
+    }
     
     public function getInputModule()
     {
@@ -101,6 +106,14 @@ class Config extends \Logshub\SearchClient\Config\File
     public function getFilePath()
     {
         return $this->filePath;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOutputOption($key)
+    {
+        return $this->getSectionOption('output', $key);
     }
 
     public function getRootAbsolutePath()
