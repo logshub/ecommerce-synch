@@ -116,7 +116,7 @@ Content of `composer.json`
 
 Content of `modules.php`, that is loaded automatically by composer.
 
-```
+```php
 <?php
 use Logshub\EcommerceSynch\Module\Registrar;
 
@@ -125,7 +125,7 @@ Registrar::registerInput(new \MyStore\Module\Input\MyStoreCom());
 
 Content of `src/Module/Input/MyStoreCom.php` file with your custom module.
 
-```
+```php
 <?php
 namespace MyStore\Module\Input;
 
@@ -175,16 +175,21 @@ class MyStoreCom extends \Logshub\EcommerceSynch\Module\Input\ModuleAbstract
 }
 ```
 
-Now, you can configure `input.module` in `config.ini` to use your custom module (from `MyStoreCom::getName`).
+Now, you can configure `input.module` in `config.ini` file to use your custom module (from `MyStoreCom::getName`).
 
-```
+```ini
 [input]
 module = "my-store.com"
 ```
 
+### How to change data before synchronizing?
+
+Create `getProductCsvRowCallback` method in your custom module. See `src/Module/Input/OpenCart.php` file for example:
+`OpenCart::getProductCsvRowCallback`, `OpenCart::onCsvRow`.
+
 ### Troubleshooting
 
-* last updated time is not calculated correctly: make sure timezone is the same on the PHP and database side
+* Last updated time is not calculated correctly? Make sure timezone is the same on the PHP and database side
 
 ### TODO
 
