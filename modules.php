@@ -9,5 +9,6 @@ Registrar::registerInput(new Module\Input\PrestaShop());
 Registrar::registerInput(new Module\Input\WooCommerce());
 Registrar::registerInput(new Module\Input\Sylius());
 Registrar::registerInput(new Module\Input\Magento1());
+Registrar::registerInput(new Module\Input\Magento2());
 
 Registrar::registerOutput(new Module\Output\LogsHubSearch());

@@ -39,6 +39,11 @@ final class SqlTest extends \PHPUnit\Framework\TestCase
         $this->checkModule('magento1', '', 67, 28, 95);
         $this->checkModule('magento1', '', 3, 3, 95, '2014-03-08 08:57:00');
     }
+    public function testMagento2ModuleQueries()
+    {
+        $this->checkModule('magento2', '', 67, 28, 95);
+        $this->checkModule('magento2', '', 3, 3, 95, '2014-03-08 08:57:00');
+    }
 
     private function checkModule($moduleName, $dbPrefix, $expectedProducts, $expectedCategories, $expectedTotalAllIds, $lastImportDate = null)
     {

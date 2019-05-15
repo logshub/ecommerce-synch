@@ -56,6 +56,8 @@ CREATE DATABASE magento19;
 GRANT ALL ON magento19.* TO oscommerce IDENTIFIED BY 'password';
 CREATE DATABASE magento16;
 GRANT ALL ON magento16.* TO oscommerce IDENTIFIED BY 'password';
+CREATE DATABASE magento23;
+GRANT ALL ON magento23.* TO oscommerce IDENTIFIED BY 'password';
 
 FLUSH privileges;
 ```
@@ -285,5 +287,20 @@ server {
 		include        fastcgi_params;
 		# include fastcgi.conf; 
 	}
+}
+```
+
+## Magento 2.3
+
+```
+upstream fastcgi_backend {
+  server  unix:/run/php/php7.2-fpm.sock;
+}
+
+server {
+  listen 80;
+  server_name magento23.local;
+  set $MAGE_ROOT /var/www/magento23.local;
+  include /var/www/magento23.local/nginx.conf.sample;
 }
 ```

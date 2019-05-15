@@ -39,6 +39,7 @@ class Magento1 extends ModuleAbstract
     /**
      * @todo price tax excluded?
      * @todo url slug
+     * @todo smaller image url
      */
     public function getProductsSql(\DateTime $time = null)
     {
@@ -47,6 +48,7 @@ class Magento1 extends ModuleAbstract
         $etId = $this->getProductEntityTypeId();
         $aNameId = $this->getProductAttributeId('name'); // 71
         $aStatusId = $this->getProductAttributeId('status'); // 96
+        $aVisibilityId = $this->getProductAttributeId('visibility'); // 102
         $aImgId = $this->getProductAttributeId('thumbnail'); // 87
         $aPriceId = $this->getProductAttributeId('price'); // 75
 
@@ -74,18 +76,22 @@ class Magento1 extends ModuleAbstract
                 SELECT CONCAT_WS('|', tblcatname.value)
                 FROM ".$prefix."catalog_category_product AS cp
                 JOIN ".$prefix."catalog_category_entity AS c ON c.entity_id = cp.category_id
-                JOIN ".$prefix."catalog_category_entity_varchar AS tblcatname ON tblcatname.entity_id = cp.category_id AND tblcatname.entity_type_id = ".$etCatId." AND tblcatname.attribute_id = ".$aCatNameId." AND tblcatname.store_id = ".$storeId."
+                JOIN ".$prefix."catalog_category_entity_varchar AS tblcatname ON tblcatname.entity_id = cp.category_id AND tblcatname.attribute_id = ".$aCatNameId." AND tblcatname.store_id = ".$storeId."
                 WHERE cp.product_id = p.entity_id
                 LIMIT 1
             ),
             p.sku
         FROM ".$prefix."catalog_product_entity AS p
-        JOIN ".$prefix."catalog_product_entity_varchar AS tblname ON tblname.entity_id = p.entity_id AND tblname.entity_type_id = ".$etId." AND tblname.attribute_id = ".$aNameId." AND tblname.store_id = ".$storeId."
-        JOIN ".$prefix."catalog_product_entity_int AS tblstatus ON tblstatus.entity_id = p.entity_id AND tblstatus.entity_type_id = ".$etId." AND tblstatus.attribute_id = ".$aStatusId." AND tblstatus.store_id = ".$storeId."
-        JOIN ".$prefix."catalog_product_entity_decimal AS tblprice ON tblprice.entity_id = p.entity_id AND tblprice.entity_type_id = ".$etId." AND tblprice.attribute_id = ".$aPriceId." AND tblprice.store_id = ".$storeId."
-        LEFT JOIN ".$prefix."catalog_product_entity_varchar AS tblimg ON tblimg.entity_id = p.entity_id AND tblimg.entity_type_id = ".$etId." AND tblimg.attribute_id = ".$aImgId." AND tblimg.store_id = ".$storeId."
-        WHERE tblstatus.value = 1
+        JOIN ".$prefix."catalog_product_entity_varchar AS tblname ON tblname.entity_id = p.entity_id AND tblname.attribute_id = ".$aNameId." AND tblname.store_id = ".$storeId."
+        JOIN ".$prefix."catalog_product_entity_int AS tblstatus ON tblstatus.entity_id = p.entity_id AND tblstatus.attribute_id = ".$aStatusId." AND tblstatus.store_id = ".$storeId."
+        JOIN ".$prefix."catalog_product_entity_int AS tblvisibility ON tblvisibility.entity_id = p.entity_id AND tblvisibility.attribute_id = ".$aVisibilityId." AND tblstatus.store_id = ".$storeId."
+        JOIN ".$prefix."catalog_product_entity_decimal AS tblprice ON tblprice.entity_id = p.entity_id AND tblprice.attribute_id = ".$aPriceId." AND tblprice.store_id = ".$storeId."
+        LEFT JOIN ".$prefix."catalog_product_entity_varchar AS tblimg ON tblimg.entity_id = p.entity_id AND tblimg.attribute_id = ".$aImgId." AND tblimg.store_id = ".$storeId."
+        WHERE tblstatus.value = 1 AND tblvisibility.value != 1
         ";
+
+        // tblvisibility.value = 1 -> not visible individually
+        // magento2 does not have entity_type_id field in entity_ATTR tables
 
         if (!empty($time)) {
             $formatedDate = $time->format('Y-m-d H:i:s');
@@ -118,8 +124,8 @@ class Magento1 extends ModuleAbstract
             CONCAT('/catalog/category/view/id/', c.entity_id),
             ''
         FROM ".$prefix."catalog_category_entity AS c
-        JOIN ".$prefix."catalog_category_entity_varchar AS tblname ON tblname.entity_id = c.entity_id AND tblname.entity_type_id = ".$etId." AND tblname.attribute_id = ".$aNameId." AND tblname.store_id = ".$storeId."
-        JOIN ".$prefix."catalog_category_entity_int AS tblstatus ON tblstatus.entity_id = c.entity_id AND tblstatus.entity_type_id = ".$etId." AND tblstatus.attribute_id = ".$aActiveId." AND tblstatus.store_id = ".$storeId."
+        JOIN ".$prefix."catalog_category_entity_varchar AS tblname ON tblname.entity_id = c.entity_id AND tblname.attribute_id = ".$aNameId." AND tblname.store_id = ".$storeId."
+        JOIN ".$prefix."catalog_category_entity_int AS tblstatus ON tblstatus.entity_id = c.entity_id AND tblstatus.attribute_id = ".$aActiveId." AND tblstatus.store_id = ".$storeId."
         WHERE tblstatus.value = 1
         ";
 
@@ -142,6 +148,7 @@ class Magento1 extends ModuleAbstract
         $storeId = $this->getStoreId();
         $etId = $this->getProductEntityTypeId();
         $aStatusId = $this->getProductAttributeId('status'); // 96
+        $aVisibilityId = $this->getProductAttributeId('visibility'); // 102
 
         $etCatId = $this->getCategoryEntityTypeId();
         $aCatActiveId = $this->getCategoryAttributeId('is_active'); // 42
@@ -149,13 +156,14 @@ class Magento1 extends ModuleAbstract
         return "
         SELECT CONCAT('p', p.entity_id)
         FROM ".$prefix."catalog_product_entity AS p
-        JOIN ".$prefix."catalog_product_entity_int AS tblstatus ON tblstatus.entity_id = p.entity_id AND tblstatus.entity_type_id = ".$etId." AND tblstatus.attribute_id = ".$aStatusId." AND tblstatus.store_id = ".$storeId."
-        WHERE tblstatus.value = 1
+        JOIN ".$prefix."catalog_product_entity_int AS tblstatus ON tblstatus.entity_id = p.entity_id AND tblstatus.attribute_id = ".$aStatusId." AND tblstatus.store_id = ".$storeId."
+        JOIN ".$prefix."catalog_product_entity_int AS tblvisibility ON tblvisibility.entity_id = p.entity_id AND tblvisibility.attribute_id = ".$aVisibilityId." AND tblstatus.store_id = ".$storeId."
+        WHERE tblstatus.value = 1 AND tblvisibility.value != 1
         
         UNION
         SELECT CONCAT('c', c.entity_id)
         FROM ".$prefix."catalog_category_entity AS c
-        JOIN ".$prefix."catalog_category_entity_int AS tblstatus ON tblstatus.entity_id = c.entity_id AND tblstatus.entity_type_id = ".$etCatId." AND tblstatus.attribute_id = ".$aCatActiveId." AND tblstatus.store_id = ".$storeId."
+        JOIN ".$prefix."catalog_category_entity_int AS tblstatus ON tblstatus.entity_id = c.entity_id AND tblstatus.attribute_id = ".$aCatActiveId." AND tblstatus.store_id = ".$storeId."
         WHERE tblstatus.value = 1
         ";
     }
