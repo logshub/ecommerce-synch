@@ -76,7 +76,111 @@ FLUSH PRIVILEGES;
 
 ### How to create input module?
 
-...
+There could be cases when your database structure is little bit different then the standard ones.
+You can create your own module, that match your database structre.
+
+```
+composer require logshub/ecommerce-synch
+# setup files like below...
+composer dump-autoload
+```
+
+Example project structure 
+
+```
+├── composer.json
+├── modules.php
+└── src
+    └── Module
+        └── Input
+            └── MyStoreCom.php
+```
+
+Content of `composer.json`
+
+```
+{
+    "require": {
+        "logshub/ecommerce-synch": "dev-master"
+    },
+    "autoload": {
+        "files": [
+            "modules.php"
+        ],
+        "psr-4": {
+            "MyStore\\": "src"
+        }
+    }
+}
+```
+
+Content of `modules.php`, that is loaded automatically by composer.
+
+```
+<?php
+use Logshub\EcommerceSynch\Module\Registrar;
+
+Registrar::registerInput(new \MyStore\Module\Input\MyStoreCom());
+```
+
+Content of `src/Module/Input/MyStoreCom.php` file with your custom module.
+
+```
+<?php
+namespace MyStore\Module\Input;
+
+class MyStoreCom extends \Logshub\EcommerceSynch\Module\Input\ModuleAbstract
+{
+    /**
+     * @return Name that 
+     */
+    public function getName()
+    {
+        return 'my-store.com';
+    }
+
+    public function getProductsSql(\DateTime $time = null)
+    {
+        $sql = "SELECT 'id', 'name', 'url', 'url_image', 'price', 'price_old', 'currency', 'description', 'categories', 'sku'";
+        // UNION
+        // SELECT p.id, p.name, p.url, p.url_image, p.price, p.price_old, p.currency, p.description, p.categories, p.sku FROM product AS p WHERE p.enabled = 1
+
+        // if (!empty($time)) {
+        //     $sql .= " AND p.updated_at >= '".$time->format('Y-m-d H:i:s')."' ";
+        // }
+
+        return $sql;
+    }
+
+    public function getCategoriesSql(\DateTime $time = null)
+    {
+        $sql = "SELECT 'id', 'name', 'url', 'url_image'";
+        // UNION
+        // SELECT c.id, c.name, c.url, c.url_image FROM categories AS c WHERE c.enabled = 1
+
+        // if (!empty($time)) {
+        //     $sql .= " AND c.updated_at >= '".$time->format('Y-m-d H:i:s')."' ";
+        // }
+
+        return $sql;
+    }
+
+    public function getCurrentIdsSql()
+    {
+        return 'SELECT 1';
+        // SELECT p.id FROM product AS p WHERE p.enabled = 1
+        // UNION
+        // SELECT c.id FROM categories AS c WHERE c.enabled = 1
+    }
+}
+```
+
+Now, you can configure `input.module` in `config.ini` to use your custom module (from `MyStoreCom::getName`).
+
+```
+[input]
+module = "my-store.com"
+```
 
 ### Troubleshooting
 
