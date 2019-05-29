@@ -28,7 +28,7 @@ class WooCommerce extends ModuleAbstract
             curr.option_value,
             '',
             (
-                SELECT GROUP_CONCAT(terms.name SEPARATOR '|')
+                SELECT GROUP_CONCAT(DISTINCT terms.name SEPARATOR '|')
                 FROM ".$prefix."term_relationships AS tr
                 JOIN ".$prefix."term_taxonomy AS tt ON tr.term_taxonomy_id = tt.term_taxonomy_id AND taxonomy = 'product_cat'
                 JOIN ".$prefix."terms AS terms ON terms.term_id = tt.term_id

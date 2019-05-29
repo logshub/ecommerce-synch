@@ -25,14 +25,14 @@ class OpenCart extends ModuleAbstract
             (SELECT value FROM ".$prefix."setting WHERE `key` LIKE 'config_currency'),
             '',
             (
-                SELECT GROUP_CONCAT(cd.name SEPARATOR '|')
+                SELECT GROUP_CONCAT(DISTINCT cd.name SEPARATOR '|')
                 FROM ".$prefix."product_to_category AS pc
                 JOIN ".$prefix."category_description AS cd ON cd.category_id = pc.category_id
                 WHERE pc.product_id = p.product_id
             ),
             p.sku,
             (
-                SELECT GROUP_CONCAT(value SEPARATOR 'x')
+                SELECT GROUP_CONCAT(DISTINCT value SEPARATOR 'x')
                 FROM ".$prefix."setting
                 WHERE `key` IN('config_image_product_width', 'config_image_product_height')
             )

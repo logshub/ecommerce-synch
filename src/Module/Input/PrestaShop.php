@@ -49,11 +49,11 @@ class PrestaShop extends ModuleAbstract
             c.iso_code,
             '',
             (
-                SELECT GROUP_CONCAT(pcd.name SEPARATOR '|')
+                SELECT GROUP_CONCAT(DISTINCT pcd.name SEPARATOR '|')
 				FROM ".$prefix."category AS pc
 				JOIN ".$prefix."category_lang AS pcd ON pcd.id_category = pc.id_category
 				JOIN ".$prefix."category_product AS pcc ON pcc.id_category = pc.id_category
-				WHERE pcc.id_product = p.id_product AND is_root_category = 0 AND pcd.id_shop = ".$shopId."
+				WHERE pcc.id_product = p.id_product AND is_root_category = 0 AND pc.active = 1 AND pcd.id_shop = ".$shopId."
 				ORDER BY level_depth DESC
             ),
             p.reference
@@ -69,6 +69,8 @@ class PrestaShop extends ModuleAbstract
             $formatedDate = $time->format('Y-m-d H:i:s');
             $sql .= " AND p.date_upd >= '".$formatedDate."' ";
         }
+
+        $sql .= ' GROUP BY p.id_product ';
 
         return $sql;
     }

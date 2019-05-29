@@ -24,7 +24,7 @@ class OsCommerce2 extends ModuleAbstract
             0,
             (SELECT configuration_value FROM ".$prefix."configuration WHERE configuration_key = 'DEFAULT_CURRENCY'),
             '',
-            (SELECT GROUP_CONCAT(cd.categories_name SEPARATOR '|') FROM ".$prefix."products_to_categories AS pc JOIN ".$prefix."categories_description AS cd ON cd.categories_id = pc.categories_id WHERE pc.products_id = p.products_id),
+            (SELECT GROUP_CONCAT(DISTINCT cd.categories_name SEPARATOR '|') FROM ".$prefix."products_to_categories AS pc JOIN ".$prefix."categories_description AS cd ON cd.categories_id = pc.categories_id WHERE pc.products_id = p.products_id),
             p.products_model
         FROM ".$prefix."products AS p
         JOIN ".$prefix."products_description AS pd ON p.products_id = pd.products_id
