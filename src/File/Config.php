@@ -17,6 +17,10 @@ class Config extends \Logshub\SearchClient\Config\File
      * @var array
      */
     protected $synch;
+    /**
+     * @var array
+     */
+    protected $log;
 
     /**
      * @var string
@@ -48,6 +52,7 @@ class Config extends \Logshub\SearchClient\Config\File
         $this->input = $config['input'];
         $this->output = $config['output'];
         $this->synch = $config['synch'];
+        $this->log = $config['log'];
     }
 
     public function setInput(array $input)
@@ -68,6 +73,26 @@ class Config extends \Logshub\SearchClient\Config\File
     public function getOutputModule()
     {
         return $this->getSectionOption('output', 'module', 'logshub-search');
+    }
+
+    public function getOutputTimeout()
+    {
+        return (int)$this->getSectionOption('output', 'timeout', 3600);
+    }
+
+    public function getLogFile()
+    {
+        return $this->getSectionOption('log', 'file', '/tmp/ecommerce-synch.log');
+    }
+
+    public function getLogLevel()
+    {
+        $level = $this->getSectionOption('log', 'level', 'INFO');
+        if (!\in_array($level, ['DEBUG','INFO','NOTICE','WARNING','ERROR'])){
+            throw new Exception('Wrong log.level configuration');
+        }
+
+        return $level;
     }
 
     public function getGenerateCsvByDatabase()

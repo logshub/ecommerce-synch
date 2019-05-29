@@ -11,6 +11,7 @@ final class ConfigTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(false, $config->getGenerateCsvByDatabase());
         $this->assertEquals('/tmp/', $config->getCsvDumpPath());
         $this->assertEquals('logshub-search', $config->getOutputModule());
+        $this->assertEquals(3600, $config->getOutputTimeout());
         $this->assertEquals('prestashop', $config->getInputModule());
         $this->assertEquals('mysql', $config->getInput('db_driver'));
         $this->assertEquals('127.0.0.1', $config->getInput('db_host'));
@@ -20,5 +21,7 @@ final class ConfigTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('osc_', $config->getInput('db_prefix'));
         $this->assertEquals(true, $config->getCheckUpdateDates());
         $this->assertEquals(\dirname(\dirname(__FILE__)) . '/', $config->getRootAbsolutePath());
+        $this->assertEquals('/tmp/ecommerce-synch.log', $config->getLogFile());
+        $this->assertEquals('INFO', $config->getLogLevel());
     }
 }

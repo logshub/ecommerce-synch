@@ -9,7 +9,7 @@ other system eg. LogsHub.com search service.
 ### Supported eCommerce platforms
 
 * Magento 1 (1.6.2.0 - 1.9.4.1)
-* Magento 2 (2.3.0)
+* Magento 2 (2.2 - 2.3.0)
 * WooCommerce (5.1.1)
 * PrestaShop (1.6.1.10 - 1.7.5.1)
 * OpenCart (2.1.0.2 - X)
@@ -201,3 +201,4 @@ Create `getProductCsvRowCallback` method in your custom module. See `src/Module/
 * ShopWare
 * Ubercart - https://www.drupal.org/project/ubercart 
 * Spree - https://github.com/spree/spree
+* PimCore - https://pimcore.com/en

@@ -1,6 +1,8 @@
 <?php
 namespace Logshub\EcommerceSynch\Module;
 
+use \Logshub\EcommerceSynch\Synchronizer;
+
 class Registrar
 {
     /**
@@ -33,7 +35,10 @@ class Registrar
         $name = $config->getOutputModule();
         foreach (self::$outputModules as $module) {
             if ($module->getName() === $name) {
+                $logger = Synchronizer::getLogger($config);
+                $logger->info('used output module: ' . $name);
                 $module->setConfig($config);
+                $module->setLogger($logger);
                 return $module;
             }
         }
@@ -46,7 +51,10 @@ class Registrar
         $name = $config->getInputModule();
         foreach (self::$inputModules as $module) {
             if ($module->getName() === $name) {
+                $logger = Synchronizer::getLogger($config);
+                $logger->info('used input module: ' . $name);
                 $module->setConfig($config);
+                $module->setLogger($logger);
                 return $module;
             }
         }

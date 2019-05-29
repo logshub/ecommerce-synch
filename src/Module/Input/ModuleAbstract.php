@@ -18,6 +18,10 @@ abstract class ModuleAbstract
      * @var int
      */
     protected $filenameTimestamp;
+    /**
+     * @var \Monolog\Logger
+     */
+    protected $logger;
 
     /**
      * Returns SQL that will return result with proper structure
@@ -45,6 +49,11 @@ abstract class ModuleAbstract
     public function setConfig(\Logshub\EcommerceSynch\File\Config $config)
     {
         $this->config = $config;
+    }
+
+    public function setLogger(\Monolog\Logger $logger)
+    {
+        $this->logger = $logger;
     }
 
     public function setDbConnection(\Logshub\EcommerceSynch\File\Config $config)

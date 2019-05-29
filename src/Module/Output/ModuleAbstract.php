@@ -7,6 +7,10 @@ abstract class ModuleAbstract
      * @var \Logshub\EcommerceSynch\File\Config
      */
     protected $config;
+    /**
+     * @var \Monolog\Logger
+     */
+    protected $logger;
     
     /**
      * @return string name of output module (configuration value must match)
@@ -29,5 +33,10 @@ abstract class ModuleAbstract
     public function setConfig(\Logshub\EcommerceSynch\File\Config $config)
     {
         $this->config = $config;
+    }
+
+    public function setLogger(\Monolog\Logger $logger)
+    {
+        $this->logger = $logger;
     }
 }

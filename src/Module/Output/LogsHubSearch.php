@@ -25,6 +25,8 @@ class LogsHubSearch extends ModuleAbstract
         }
         
         $process = new Process($cmdArray);
+        // By default processes have a timeout of 60 seconds,
+        $process->setTimeout($this->config->getOutputTimeout());
         $process->run();
         if (!$process->isSuccessful()) {
             throw new Exception('Synchronization error '.$process->getErrorOutput() . '; exit code text: ' . $process->getExitCodeText().'; command: ' . \implode(' ', $cmdArray));

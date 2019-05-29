@@ -23,10 +23,15 @@ class Synchronizer
      * @var \Logshub\EcommerceSynch\File\ImportsLog
      */
     protected $importLog;
+    /**
+     * @var \Monolog\Logger
+     */
+    protected $logger;
 
     public function __construct(\Logshub\EcommerceSynch\File\Config $config)
     {
         $this->config = $config;
+        $this->logger = self::getLogger($config);
     }
 
     /**
@@ -176,6 +181,8 @@ class Synchronizer
      */
     public function execSQL($sql)
     {
+        $this->logger->debug('SQL: ' . trim(preg_replace('/\s+/', ' ', $sql)));
+
         $stmt = $this->getDbConnection()->query($sql);
         $err = $this->getDbConnection()->errorInfo();
         if ($err[0] != '00000') {
@@ -217,5 +224,16 @@ class Synchronizer
         $this->importLog = new \Logshub\EcommerceSynch\File\ImportsLog($logPath);
 
         return $this->importLog;
+    }
+
+    public static function getLogger(\Logshub\EcommerceSynch\File\Config $config)
+    {
+        $logger = new \Monolog\Logger('esynch');
+        $logger->pushHandler(new \Monolog\Handler\StreamHandler(
+            $config->getLogFile(),
+            \Monolog\Logger::toMonologLevel($config->getLogLevel())
+        ));
+
+        return $logger;
     }
 }
